@@ -1,7 +1,7 @@
 # UCLA-CS-130-Group4
 
-### Quickstart
+### Backend Quickstart
 
-- `yarn`
-- `npm run dev-server`
-- Open http://localhost:8080/ to see the app
+- `npm install`
+- `npm start`
+- Open http://localhost:3001/ to see the app
