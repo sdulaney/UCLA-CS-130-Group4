@@ -1,6 +1,6 @@
 # UCLA-CS-130-Group4
 
-### Backend Quickstart
+### Backend Quickstart (from repo base directory)
 
 - `npm install`
 - `npm start`
