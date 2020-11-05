@@ -1,4 +1,4 @@
-# UCLA-CS-130-Group4
+# Frontend client
 
 ### Quickstart
 
