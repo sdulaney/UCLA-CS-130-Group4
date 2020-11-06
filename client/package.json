@@ -1,27 +1,40 @@
 {
-  "name": "chicken-tinder",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "CS130-Group4",
-  "license": "MIT",
-  "scripts": {
-    "serve": "live-server public/",
-    "build": "webpack",
-    "dev-server": "webpack-dev-server"
-  },
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "babel-cli": "6.24.1",
-    "babel-core": "6.25.0",
-    "babel-loader": "7.1.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-preset-env": "1.5.2",
-    "babel-preset-react": "6.24.1",
-    "live-server": "^1.2.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
-    "validator": "8.0.0",
-    "webpack": "3.1.0",
-    "webpack-dev-server": "2.5.1"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "bootstrap": "^4.5.3",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.0",
+    "web-vitals": "^0.2.4"
   },
-  "proxy": "http://localhost:3001"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

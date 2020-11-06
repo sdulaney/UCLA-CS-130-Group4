@@ -1,12 +1,13 @@
 /*
-    Usage:-
-    <InputField fieldName={<name here as a string>}/>
-
-    Ex:
-    <InputField fieldName={"Password"}/>
+    USAGE
+    1- import InputField from '<PATH>'
+    
+    2- <InputField fieldName={<field name here as a string>} />
+    ex: <InputField fieldName={"Username"} />
 */
 
 import React from "react";
+import "../styles/InputField.css";
 export default class InputField extends React.Component {
   constructor(props) {
     super(props);
@@ -23,10 +24,11 @@ export default class InputField extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
+        <h3 className="input">{this.props.fieldName} </h3>
         <form onSubmit={this.handleSubmit}>
-          <label>{this.props.fieldName} : </label>
           <input
+            className="inputfield"
             type="text"
             value={this.state.field}
             onChange={this.handleChange}
