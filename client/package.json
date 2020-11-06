@@ -7,29 +7,21 @@
   "scripts": {
     "serve": "live-server public/",
     "build": "webpack",
-    "dev-server": "webpack-dev-server",
-    "start": "webpack serve"
+    "dev-server": "webpack-dev-server"
   },
   "dependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.3",
-    "babel-loader": "8.1.0",
+    "babel-cli": "6.24.1",
+    "babel-core": "6.25.0",
+    "babel-loader": "7.1.1",
     "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-preset-env": "1.7.0",
+    "babel-preset-env": "1.5.2",
     "babel-preset-react": "6.24.1",
-    "css-loader": "^5.0.1",
     "live-server": "^1.2.0",
-    "node-sass": "^5.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "sass-loader": "^10.0.5",
-    "style-loader": "^2.0.0",
-    "validator": "13.1.17",
-    "webpack": "^5.4.0",
-    "webpack-cli": "^4.2.0"
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "validator": "8.0.0",
+    "webpack": "3.1.0",
+    "webpack-dev-server": "2.5.1"
   },
-  "proxy": "http://localhost:3001",
-  "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
-  }
+  "proxy": "http://localhost:3001"
 }
