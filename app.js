@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+//TODO: change /users to ?
 app.use('/users', usersRouter);
 
 app.post("/api/summarizeurl", (req, res) => {
