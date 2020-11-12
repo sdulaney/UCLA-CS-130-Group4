@@ -9,7 +9,7 @@ const client = redis.createClient();
 router.get('/', function(req, res, next) {
 	const uid = uuid.v4();
 	//TODO: avoid duplicates
-	res.render("uid", {uid});
+	res.status(200).json({groupid:uid});
 
 });
 
@@ -24,6 +24,7 @@ router.post('/:uid/:username', function(req, res, next){
 	})
 
 	client.rpush(uuid, username);
+	res.status(200);
 })
 
 module.exports = router;
