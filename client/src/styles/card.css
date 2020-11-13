@@ -1,0 +1,97 @@
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* ---------> Container styles <-----------*/
+/* --------------------------------------- */
+/* --------------------------------------- */
+
+ .container {
+   /* Background Gradient for Monochromatic Colors */
+
+  background: rgb(180,58,119);
+  background: linear-gradient(0deg, rgba(180,58,119,1) 0%, rgba(253,29,29,1) 49%, rgba(252,176,69,1) 98%);
+   /* background-size: cover; */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    -webkit-filter: blur(30px);
+    filter: blur(30px);  */
+ }
+
+ .cardContainer {
+  width: 500px;
+  height: 700px;
+  margin: auto;
+  border: 1.5px solid #747272;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 50px -10px rgb(172, 160, 160);
+  overflow: hidden;
+
+  
+  /* position: absolute; */
+  background-color: #ffffff;
+ } 
+ .card_image {
+  width: 100%;
+  height: 430px;
+  box-shadow:0 0 2px;
+  
+
+}
+.buttonsContainer {
+  /* border: 1px solid; */
+  /* padding: 1%; */
+  width: 100%;
+  text-align:center;
+  
+  
+}
+.buttonChildContainer {
+  padding: 1.2em 1em 0;
+  width: 50%;
+  float: left;
+  
+} 
+
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* ---------> Components styles <----------*/
+/* --------------------------------------- */
+/* --------------------------------------- */
+.buttonStyle {
+  color: red;
+  width: 50px;
+  height: 50px;
+  -moz-border-radius:75px;
+  -webkit-border-radius: 75px;
+
+  
+}
+.iconStyle {
+  color: black;
+}
+
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* ---------> Text styles <----------------*/
+/* --------------------------------------- */
+/* --------------------------------------- */
+.resturantNameStyle {
+  font-size: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #424242;
+}
+
+.distanceTextStyle {
+  font-size: 1rem;
+  color: #424242;
+}
+.titleText {
+  color: #424242;
+}
+
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* ---------> Nav Bar <----------------*/
+/* --------------------------------------- */
+/* --------------------------------------- */
