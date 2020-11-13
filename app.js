@@ -29,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.get('/algo', (req, res) => {
+	console.log('hello world')
+});
 
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)
