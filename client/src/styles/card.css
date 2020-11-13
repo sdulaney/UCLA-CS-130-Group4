@@ -4,25 +4,47 @@
 /* --------------------------------------- */
 /* --------------------------------------- */
 
-.container {
-}
-.cardContainer {
+ .container {
+   /* Background Gradient for Monochromatic Colors */
+
+background: rgb(180,58,119);
+background: linear-gradient(0deg, rgba(180,58,119,1) 0%, rgba(253,29,29,1) 49%, rgba(252,176,69,1) 98%);
+ }
+
+ .cardContainer {
   width: 500px;
-  height: 500px;
+  height: 700px;
   margin: auto;
-  border: 3px solid #73ad21;
-}
-.card_image {
+  border: 3px solid #424242;
+  
+  /* position: absolute; */
+  background-color: #ffffff;
+ } 
+ .card_image {
   width: 100%;
-  height: 200px;
+  height: 450px;
+  box-shadow:0 0 2px;
+
 }
 .buttonsContainer {
-  border: 3px solid #fff;
+  /* border: 1px solid; */
+  /* padding: 1%; */
+  width: 100%;
+  text-align:center;
+  
+  
 }
 .buttonChildContainer {
+  padding: 1.2em 1em 0;
   width: 50%;
   float: left;
-}
+  
+} 
+
+
+
+
+
 
 /* --------------------------------------- */
 /* --------------------------------------- */
@@ -44,11 +66,13 @@
 .resturantNameStyle {
   font-size: 2rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #424242;
 }
 
 .distanceTextStyle {
   font-size: 1rem;
+  color: #424242;
 }
 .titleText {
-  color: blue;
+  color: #424242;
 }

@@ -36,9 +36,9 @@ export default class CardDisplay extends React.Component {
       <div className="container">
         <Card bsPrefix="cardContainer">
           {this.props.isMatched ? (
-            <h3 className="titleText"> Tonight's Dinner</h3>
+            <h3 className="titleText" > Tonight's Dinner</h3>
           ) : (
-            <h3 className="titleText"> Tonight's Matched Dinner</h3>
+              <h3 className="titleText"> Tonight's Matched Dinner</h3>
           )}
 
           <img
