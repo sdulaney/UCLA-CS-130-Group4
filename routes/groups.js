@@ -9,7 +9,7 @@ class Group {
     }
   }
 
-router.post('/', function(req, res, next) {
+router.post('/create', async(req, res, next) => {
     // TODO: generate unique groupId using uuid library
     var groupId = "10332339-fIV3H";
     var address = req.body.address;
