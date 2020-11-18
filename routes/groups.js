@@ -3,13 +3,26 @@ var router = express.Router();
 var request = require('request');
 var yelp = require('../yelp.js');
 
+class Restaurant {
+    constructor(name, imageUrl, rating, distance, phone, location) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.rating = rating;
+        this.distance = distance;
+        this.phone = phone;
+        this.location = location;
+    }
+}
+
 class Group {
     constructor(groupId, restaurants, members) {
       this.groupId = groupId;
       this.restaurants = restaurants;
       this.members = members;
     }
-  }
+}
+
+var groups = [];
 
 router.post('/create', async(req, res, next) => {
     // TODO: generate unique groupId using uuid library
@@ -32,9 +45,29 @@ router.post('/create', async(req, res, next) => {
         headers: headers
     }));
     Promise.all(promises).then(values => {
-        console.log(values);
+        // TODO: persist Group, Restaurant data
+        // console.log(JSON.parse(values));
+        var data = JSON.parse(values);
+        var restaurants = [];
+        for (const property in data) {
+            if (property == 'businesses') {
+                console.log(`${property}`);
+                for (const index in data[property]) {
+                    // console.log(`${data[property][index]['name']}`);
+                    var locationStr = data[property][index]['location']['address1'] + ', ' + data[property][index]['location']['city'] + ', ' + data[property][index]['location']['state'] + ' ' + data[property][index]['location']['zip_code'];
+                    restaurants.push(new Restaurant(
+                        data[property][index]['name'],
+                        data[property][index]['image_url']), 
+                        data[property][index]['rating'], 
+                        data[property][index]['distance'], 
+                        data[property][index]['phone'], 
+                        locationStr
+                    );
+                }
+            }
+        }
+        console.log(restaurants);
     });
-    // TODO: persist Group, Restaurant data
     res.redirect(200, '/join/${groupId}'); 
 });
 
