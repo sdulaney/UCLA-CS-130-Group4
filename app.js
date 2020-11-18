@@ -49,16 +49,12 @@ app.get('/set-redis',(req, res) => {
 })
 
 app.get('/get-redis', (req, res) => {
-	let message = null;
-	//note all redis commands are sychronous, no need to use await.
 	client.get('user1Id', (err, val) => {
 		if (val) {
 			console.log(val)
-			message = val
+			res.status(200).send(val);
 		}
 	})
-	//res.setHeader('Content-Type', 'application/json')
-	res.status(200).send(message);
 })
 
 
