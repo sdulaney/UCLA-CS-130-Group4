@@ -1,14 +1,14 @@
 /*
     USAGE
-    1- import InputField from '<PATH>'
+    1- import DropdownField from '<PATH>'
     
-    2- <InputField fieldName={<field name here as a string>} />
-    ex: <InputField fieldName={"Username"} />
+    2- <DropdownField inputList={<Array of strings>} fieldName={<field name here as a string>} />
+    ex: <DropdownField inputList={["Item1", "Item2", "Item3"]} fieldName={"Items List"} />
 */
 
 import React from "react";
 import "../styles/InputField.css";
-export default class InputField extends React.Component {
+export default class DropdownField extends React.Component {
   constructor(props) {
     super(props);
     this.state = { field: "" };
@@ -27,12 +27,15 @@ export default class InputField extends React.Component {
       <div className="container">
         <h3 className="input">{this.props.fieldName} </h3>
         <form onSubmit={this.handleSubmit}>
-          <input
-            className="inputfield"
-            type="text"
+          <select
+            className={"inputfield"}
             value={this.state.field}
             onChange={this.handleChange}
-          />
+          >
+            {this.props.inputList.map((x) => (
+              <option value={x}>{x}</option>
+            ))}
+          </select>
         </form>
       </div>
     );
