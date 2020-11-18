@@ -30,4 +30,6 @@ Test to see if you server working:
 - $redis-cli ping
 - You should see 'PONG'
 
-Look at the app.js (backend) to see how to connect to redis server from node js
+Look at the app.js (backend) to see how to connect to redis server from node js.
+
+For more info about setting up redis : https://redis.io/topics/quickstart
