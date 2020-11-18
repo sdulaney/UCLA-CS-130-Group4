@@ -10,16 +10,22 @@ var bodyParser = require('body-parser');
 var azure = require('./azure.js');
 var request = require('request');
 var cheerio = require('cheerio');
-
+var redis = require('redis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
 
 var app = express();
-
+const asyncRoute = (fn) => (...args) => 
+fn(args[0], args[1], args[2]).catch(args[2])
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
+
+const client = redis.createClient();
+client.on("error", function(error) {
+	console.error(error)
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,7 +36,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 app.use('/groups', groupRouter);
+
+app.get('/algo', (req, res) => {
+	console.log('hello world')
+});
+
+app.get('/set-redis',(req, res) => {
+	client.set('user1Id', '908242' )
+	res.status(200).send()
+})
+
+app.get('/get-redis', (req, res) => {
+	let message = null;
+	//note all redis commands are sychronous, no need to use await.
+	client.get('user1Id', (err, val) => {
+		if (val) {
+			console.log(val)
+			message = val
+		}
+	})
+	//res.setHeader('Content-Type', 'application/json')
+	res.status(200).send(message);
+})
+
 
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)
@@ -50,6 +80,7 @@ app.post("/api/summarizeurl", (req, res) => {
 		});
   	});
 });
+
 
 app.post("/api/summarize", (req, res) => {
   if(!req.body.text)
