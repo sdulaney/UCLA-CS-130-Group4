@@ -20,6 +20,11 @@ var app = express();
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
+var mongoose = require('mongoose');
+var mongodb_uri;
+
+mongoose.connect(mongodb_uri, {useNewUrlParser: true, useUnifiedTopology: true});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
