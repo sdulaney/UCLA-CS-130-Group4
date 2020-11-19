@@ -12,7 +12,7 @@ Instruction for install Redis
 
 Now Install redis server
 For Mac:
-- brew install ioredis
+- brew install redis
 
 For others or if you do not have brew installed:
 run these commands below. make sure you have GCC compiler and libc.
