@@ -16,8 +16,9 @@ var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
 
 var app = express();
-const asyncRoute = (fn) => (...args) => 
-fn(args[0], args[1], args[2]).catch(args[2])
+var classes = require('./classes/classes')
+var users = classes.users
+var groups = classes.groups
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -42,24 +43,22 @@ app.use('/users', usersRouter);
 
 app.use('/groups', groupRouter);
 
-app.get('/algo', (req, res) => {
-	console.log('hello world')
-});
-
-app.get('/set-redis',(req, res) => {
-	client.set('user1Id', '908242' )
+app.get('/getme', async (req, res) => {
+	await users.insertNewUser('123','1234','hank')
+	console.log("hello")
+	await groups.insertNewGroup('123')
+	console.log("hello-world")
+	await groups.insertNewMember('123', '1234')
+	console.log(await users.getLikedRestaurant('1234'))
+	console.log(await users.getGroupId('1234'))
+	console.log(await groups.getMembers('123'))
+	const matchedRestaurant = await users.likeRestaurant('1234','in-n-out')
+	console.log(matchedRestaurant) //should return null
+	console.log(await users.getLikedRestaurant('1234')) //should return 'in-n-out'
 	res.status(200).send()
 })
 
-app.get('/get-redis', (req, res) => {
-	client.get('user1Id', (err, val) => {
-		if (val) {
-			console.log(val)
-			res.status(200).send(val);
-		}
-	})
-})
-
+/*
 async function setTransact() {
 	console.log("hello-me")
 	let retry = true ;
@@ -103,7 +102,7 @@ app.get('/test-transac', (req, res) =>{
 	setTransact()
 	res.status(200).send('success')
 })
-
+*/
 
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)
