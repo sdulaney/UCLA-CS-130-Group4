@@ -1,9 +1,16 @@
 /*
     USAGE
-    1- import InputField from '<PATH>'
+    1- import CardDisplay from "<PATH>/Card";
     
-    2- <InputField fieldName={<field name here as a string>} />
-    ex: <InputField fieldName={"Username"} />
+    2-  Example :
+       <CardDisplay
+        imageUrl={
+          "https://lh3.googleusercontent.com/proxy/CqvyasCiz2MlzC7F1e56MPfVngySiAobdHRrFeby0t7WD51FtjvxkAuEbs3sCLTciLFsDbyZWDdnpblmHgl7opOFhvtTk95Vye9Qug"
+        }
+        isMatched={false}
+        resturantName={"Kazanova"}
+        Distance={"2 miles"}
+      />
 */
 
 import React from "react";
@@ -36,9 +43,9 @@ export default class CardDisplay extends React.Component {
       <div className="container">
         <Card bsPrefix="cardContainer">
           {this.props.isMatched ? (
-            <h3 className="titleText" > Tonight's Dinner</h3>
+            <h3 className="titleText"> Tonight's Dinner</h3>
           ) : (
-              <h3 className="titleText"> Tonight's Matched Dinner</h3>
+            <h3 className="titleText"> Tonight's Matched Dinner</h3>
           )}
 
           <img

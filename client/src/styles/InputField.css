@@ -1,8 +1,4 @@
 .container {
-  margin: 50px auto 0;
-  /* background: #fff; */
-  background: rgb(180,58,119);
-  background: linear-gradient(0deg, rgba(180,58,119,1) 0%, rgba(253,29,29,1) 49%, rgba(252,176,69,1) 98%);
 }
 
 .inputfield {
