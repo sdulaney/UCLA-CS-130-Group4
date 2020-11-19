@@ -1,7 +1,6 @@
 import React from "react";
 import InputField from "../components/InputField";
-import DropdownField from "../components/DropdownField";
-import { us_states } from "../config";
+import { Link } from "react-router-dom";
 import "../styles/pageStyle.css";
 import Button from "react-bootstrap/Button";
 const JoinGroupPage = () => {
@@ -11,17 +10,19 @@ const JoinGroupPage = () => {
         <h1 className="headers"> Join Event</h1>
         <InputField fieldName={"Your Name"} />
         <InputField fieldName={"Group URL"} />
-
-        <Button
-          style={{
-            paddingLeft: 50,
-            paddingRight: 50,
-            margin: 30,
-          }}
-          variant="primary"
-        >
-          Start Swipping
-        </Button>
+        {/* Parse groupId from GroupURL input field,then add it to the path as swipe/{groupId} */}
+        <Link to="/swipe">
+          <Button
+            style={{
+              paddingLeft: 50,
+              paddingRight: 50,
+              margin: 30,
+            }}
+            variant="primary"
+          >
+            Start Swipping
+          </Button>
+        </Link>
       </div>
     </div>
   );
