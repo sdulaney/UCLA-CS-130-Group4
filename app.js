@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var azure = require('./azure.js');
 var request = require('request');
 var cheerio = require('cheerio');
-var redis = require('redis');
+var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
@@ -22,10 +22,13 @@ fn(args[0], args[1], args[2]).catch(args[2])
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
+/*
 const client = redis.createClient();
 client.on("error", function(error) {
-	console.error(error)
-});
+	console.log("Error" + error)
+}); */
+
+const client = new ioRedis()
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -55,6 +58,50 @@ app.get('/get-redis', (req, res) => {
 			res.status(200).send(val);
 		}
 	})
+})
+
+async function setTransact() {
+	console.log("hello-me")
+	let retry = true ;
+	const transactionConnection = new ioRedis()
+	const list = ['1','2','3']
+	const listStr = JSON.stringify(list)
+	
+	await transactionConnection.set('new', listStr)
+	await transactionConnection.set('1', '1')
+	await transactionConnection.set('2','2')
+	await transactionConnection.set('3','3')
+	while(retry) {
+		await transactionConnection.watch("string key");
+			const val = await transactionConnection.get("string key");
+			const input = val + 'hello'
+		await transactionConnection.watch(list);
+		const val1 = await transactionConnection.get('1')
+			await transactionConnection.multi()
+			.set("string key", input)
+			.set('1', val1 + '1')
+			.exec((err, result) => {
+				console.log('first')
+				
+				if (result != null) {
+					console.log('suc tran')
+					retry = false	
+				}
+			})
+	}
+		console.log(retry)
+		const result = await transactionConnection.get("string key");
+		console.log(result)
+		const result1 = await transactionConnection.get("1")
+		console.log(result1)
+    transactionConnection.quit()
+}
+
+app.get('/test-transac', (req, res) =>{
+	console.log("print2")
+	console.log("hello")
+	setTransact()
+	res.status(200).send('success')
 })
 
 
