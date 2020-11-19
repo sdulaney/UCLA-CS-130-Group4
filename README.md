@@ -8,11 +8,11 @@
 
 Instruction for install Redis
 - $cd UCLA-CS-130-Group4
-- `npm install redis`  //this command will install redis client for node js
+- `npm install ioredis`  //this command will install redis client for node js
 
 Now Install redis server
 For Mac:
-- brew install redis
+- brew install ioredis
 
 For others or if you do not have brew installed:
 run these commands below. make sure you have GCC compiler and libc.
@@ -33,3 +33,4 @@ Test to see if you server working:
 Look at the app.js (backend) to see how to connect to redis server from node js.
 
 For more info about setting up redis : https://redis.io/topics/quickstart
+For more info about npm ioredis: https://www.npmjs.com/package/ioredis
