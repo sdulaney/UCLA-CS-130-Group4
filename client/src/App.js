@@ -8,10 +8,11 @@ import { Navbar, Nav } from "react-bootstrap";
 const App = () => {
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="color-nav" fixed="top" bg="dark" variant="dark">
         <Navbar.Brand href="/">Chicken Tinder</Navbar.Brand>
-        <div style={{ marginLeft: 1000 }}>
+        <div style={{ marginLeft: 1485 }}>
           <Nav className="mr-auto">
+            {/* <Nav className="navbar navbar-default navbar-fixed-top"> */}
             <Nav.Link
               style={{ fontSize: 20, color: "white" }}
               href="/creategroup"

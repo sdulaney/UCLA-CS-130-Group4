@@ -5,6 +5,8 @@
 /* --------------------------------------- */
 
 .container {
+  justify-content: center
+  
 }
 
 .cardContainer {
@@ -20,18 +22,34 @@
 
   /* position: absolute; */
   background-color: #ffffff;
+
+  /* centering cards */
+  position: absolute;
+  top: 53.5%;
+  margin: 0;
+  left: 50%;
+  /* margin-right: -50%; */
+  transform: translate(-50%, -50%)
+
+
+  /* display: flex; */
+  /* justify-content: center */
+  
+
 }
 .card_image {
-  width: 100%;
+width: 100%;
   height: 430px;
   box-shadow: 0 0 2px;
+  display: flex;
+  justify-content: center
 }
+
 .buttonsContainer {
-  /* border: 1px solid; */
-  /* padding: 1%; */
   width: 100%;
   text-align: center;
 }
+
 .buttonChildContainer {
   padding: 1.2em 1em 0;
   width: 50%;
@@ -78,3 +96,14 @@
 /* ---------> Nav Bar <----------------*/
 /* --------------------------------------- */
 /* --------------------------------------- */
+.mr-auto {
+  text-align: center;
+  /* background-color: grey; */
+  /* opacity: 0.55; */
+  justify-content: space-between;
+}
+
+.color-nav{
+  background-color: grey;
+  opacity: 0.65;
+}
