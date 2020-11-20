@@ -15,7 +15,7 @@
   margin: auto;
   border: 1.5px solid #747272;
   background-size: cover;
-  /* background-position: center; */
+  background-position: center;
   background-repeat: no-repeat;
   box-shadow: 0 0 50px -10px rgb(172, 160, 160);
   overflow: hidden;
