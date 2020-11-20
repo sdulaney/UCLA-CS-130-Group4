@@ -1,7 +1,6 @@
-// import { groups, users } from '../classes'
-const classes = require('../classes.js');
-var users = new classes.Users();
-var groups = new classes.Groups();
+const {groups,users,restaurants} = require('../classes/classes.js');
+// var users = classes.Users();
+// var groups = classes.Groups();
 var express = require('express');
 var router = express.Router();
 const uuid = require('uuid');

@@ -7,29 +7,31 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 const CreateGroup = () => {
   return (
-    <div className="pageContainer">
-      <div className="elementsContainer">
-        <h1 className="headers"> Create Event</h1>
-        <InputField fieldName={"Your Name"} />
-        <InputField fieldName={"Street Address"} />
-        <InputField fieldName={"City"} />
-        <DropdownField inputList={us_states} fieldName={"State"} />
-        <InputField fieldName={"Zip Code"} />
-        <InputField fieldName={"Max Radius"} />
+    <div>
+      <div className="pageContainer">
+        <div className="elementsContainer">
+          <h1 className="headers"> Create Event</h1>
+          <InputField fieldName={"Your Name"} />
+          <InputField fieldName={"Street Address"} />
+          <InputField fieldName={"City"} />
+          <DropdownField inputList={us_states} fieldName={"State"} />
+          <InputField fieldName={"Zip Code"} />
+          <InputField fieldName={"Max Radius"} />
 
-        <Link to="/joingroup">
-          <Button
-            style={{
-              paddingLeft: 50,
-              paddingRight: 50,
-              margin: 30,
-            }}
-            variant="primary"
-            onSubmit={() => {}}
-          >
-            Create Group
-          </Button>
-        </Link>
+          <Link to="/joingroup">
+            <Button
+              style={{
+                paddingLeft: 50,
+                paddingRight: 50,
+                margin: 30,
+              }}
+              variant="primary"
+              onSubmit={() => {}}
+            >
+              Create Group
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

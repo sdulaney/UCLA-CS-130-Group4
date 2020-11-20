@@ -1,8 +1,3 @@
-// import { groups, users } from './classes'
-// const {groups,users} = require('./classes.js');
-const classes = require('./classes.js');
-var users = classes.Users;
-var groups = classes.Groups;
 var ioRedis = require('ioredis')
 
 //json classess
@@ -40,13 +35,16 @@ async function checkForMatch(userId, groupId, restaurantId) {
     let returnVal = null;
     while(retry) {
         await transactClient.watch(groupId);
+        console.log(groupId)
         const memStr = await transactClient.hget(groupId, 'members');
+        console.log(memStr)
         const memObj = JSON.parse(memStr)
         await transactClient.watch(memObj);
         for (let i =0; i < memObj.length; i++){
             const userRestStr = await transactClient.hget(memObj[i], 'likedRestaurantId');
-            for (let j =0; j<userRestStr; j++) {
-                if (restaurantId == userRestStr) {
+            const userRestObj = JSON.parse(userRestStr)
+            for (let j =0; j<userRestObj.length; j++) {
+                if (restaurantId == userRestObj[j]) {
                     count += 1;
                     break;
                 }
@@ -77,3 +75,5 @@ async function checkForMatch(userId, groupId, restaurantId) {
 
     return returnVal;
 }
+
+module.exports = checkForMatch;

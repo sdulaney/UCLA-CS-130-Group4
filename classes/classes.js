@@ -1,30 +1,23 @@
-// import { checkForMatch } from './matcher'
-
-const checkForMatch = require('./matcher.js')
+var checkForMatch =  require('./matcher');
 
 var ioRedis = require('ioredis');
-
-//push json objects
-//group
-//key: groupId, value: restId: restaurantId, members: [userId, userId2,...]
-
-//user
-//key: userId, value: name: userName, groupRestaurantMap: [groupId: [restaurantId, restaurantId, ...], groupId: []]
-//assumeing userId ang groupId are different
 
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-//fly weight class, intialized only once and contains all the users
 class Users {
     constructor() {
         this.client = new ioRedis()
     }
-    insertNewUser(groupId,userId,name) {
+    //@param: groupId : string, userId : string, name : string
+    //@return: void
+    async insertNewUser(groupId,userId,name) {
         const data = JSON.stringify([]);
-        this.client.hset(userId, "name", name, "groupId", groupId, "likedRestaurantId", data);  
+        await this.client.hset(userId, "name", name, "groupId", groupId, "likedRestaurantId", data);  
     }
+    //@param: userId : string, resId : string
+    //@return: void
     async insertLikedRestaurant(userId, resId) {
         //wrap in transaction
         const transactClient = new ioRedis()
@@ -46,11 +39,13 @@ class Users {
         }
         transactClient.quit()
     }
+    //@param: userId : string, resId : string
+    //@return: restaurantId : string
     async likeRestaurant(userId,resId) {
         //insert restaurant into userId
-        this.insertLikedRestaurant(userId,resId)
-        const groupId = this.getGroupId(userId)
-       return checkForMatch(userId,groupId,resId)
+        await this.insertLikedRestaurant(userId,resId)
+        const groupId = await this.getGroupId(userId)
+       return await checkForMatch(userId,groupId,resId)
     }
     async removeUser(userId) {
         await this.client.del(userId)
@@ -61,23 +56,44 @@ class Users {
     async getGroupId(userId){
         return await this.client.get(userId,'groupId')
     }
+    //@param: userId : string
+    //@return: void
+    async removeUser(userId) {
+        await this.client.del(userId)
+    }
+    //@param: userId : string
+    //@return: list_restaurantId : string[] //list of restaurant Id the user likes
+    async getLikedRestaurant(userId){
+        return await this.client.hget(userId, 'likedRestaurantId');
+    }
+    //@param: userId : string
+    //@return: groupId : string
+   async getGroupId(userId){
+        return await this.client.hget(userId,'groupId')
+    }
  }
 
- //fly weight, one instance contains all groups + its members
+
  class Groups {
     constructor() {
         this.client = new ioRedis()
     }
-    insertNewGroup(groupId) {
+    //@param: groupId : string
+    //@return: void
+    async insertNewGroup(groupId) {
+        console.log("break point")
         const data = JSON.stringify([])
-        this.client.hset(groupId, 'members', data, 'fetchedRestaurants', data)
+        await this.client.hset(groupId, 'members', data, 'fetchedRestaurants', data)
+        console.log("break point2")
     }
+    //@param: groupId : string, userId : string
+    //@return: void
     async insertNewMember(groupId, userId) {
         const transactClient = new ioRedis()
         let retry = true
         while(retry) {
             await transactClient.watch(groupId)
-            let memStr = await this.client.hget(groupId, 'members')
+            let memStr = await transactClient.hget(groupId, 'members')
             let memObj = JSON.parse(memStr)
             memObj.push(userId)
             memStr = JSON.stringify(memObj)
@@ -92,6 +108,8 @@ class Users {
         }
         transactClient.quit()
     }
+    //@param: groupId: string, userId: string
+    //@return: void
     async removeMember(groupId,userId) {
         const transactClient = new ioRedis()
         let retry = true
@@ -117,6 +135,13 @@ class Users {
     async setFetchedRestaurantLists(groupId, restIdList) {
         await this.client.hset(groupId, 'fetchedRestaurants', JSON.stringify(restIdList))
     }
+    //@param: groupId : string, restIdList : string[] // list of restaurant id
+    //@return: void
+    async setFetchedRestaurantLists(groupId, restIdList) {
+        await this.client.hset(groupId, 'fetchedRestaurants', JSON.stringify(restIdList))
+    }
+    //@param: groupId : string
+    //@return: list_restaurantId : string[]
     async getFetchedRestaurantLists(groupId){
         const tempStr = await this.client.hget(groupId, 'fetchedRestaurants')
         return JSON.parse(tempStr)
@@ -124,6 +149,13 @@ class Users {
     async removeGroup(groupId) {
         await this.client.hdel(groupId)
     }
+    //@param: groupId : string
+    //@return: void
+    async removeGroup(groupId) {
+        await this.client.hdel(groupId)
+    }
+    //@param: groupId : string
+    //@return: list_userId : string[]
     async getMembers(groupId) {
         const tempStr = await this.client.hget(groupId, 'members')
         return JSON.parse(tempStr)
@@ -131,12 +163,41 @@ class Users {
     async getMatch(groupId){
         return await this.client.hget(groupId, 'restaurantId')
     }
+    //@param: groupId : string
+    //@return: matched_restaurantId : string
+    async getMatch(groupId){
+        return await this.client.hget(groupId, 'restaurantId')
+    }
+    //@param: groupId : string, resId : string
+    //@return: void
     async setMatch(groupId, resId){
         await this.client.hset(groupId, 'restaurantId', resId )
     }
  }
+ //this singleton class is used to store list of restaurant objects fetched from Yelp API. 
+ class Restaurants {
+     constructor() {
+         this.client = new ioRedis()
+     }
+     //@param: groupId : string, restList : Object[] // list of restaurant object
+     //@return: void
+     async insertListRestaurantObj(groupId, restList) {
+         const tempStr = JSON.stringify(restlist) 
+         await this.client.hset('restaurantObj', groupId, tempStr)
+     }
+     //@param: groupId : string
+     //@return: list_of_restaurantObj : Object[]  
+     async getListRestaurantObj(groupId) {
+        const tempStr = await this.client.hget('restaurantObj', groupId)
+        return JSON.parse(tempStr);
+     }
+ }
 
-// let groups = new Groups();
-// let users = new Users();
-
-module.exports = {Groups:Groups, Users:Users};
+ let groups = new Groups();
+ let users = new Users();
+ let restaurants = new Restaurants(); 
+ module.exports = {
+     groups,
+     users,
+     restaurants,
+ };
