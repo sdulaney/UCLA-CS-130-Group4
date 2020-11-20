@@ -23,12 +23,6 @@ var groups = classes.groups
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
-/*
-const client = redis.createClient();
-client.on("error", function(error) {
-	console.log("Error" + error)
-}); */
-
 const client = new ioRedis()
 
 app.use(logger('dev'));
@@ -39,8 +33,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
+app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
 
 app.get('/getme', async (req, res) => {

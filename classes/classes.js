@@ -47,6 +47,15 @@ class Users {
         const groupId = await this.getGroupId(userId)
        return await checkForMatch(userId,groupId,resId)
     }
+    async removeUser(userId) {
+        await this.client.del(userId)
+    }
+    async getLikedRestaurant(userId){
+        return await this.client.hget(userId, 'likedRestaurantId');
+    }
+    async getGroupId(userId){
+        return await this.client.get(userId,'groupId')
+    }
     //@param: userId : string
     //@return: void
     async removeUser(userId) {
@@ -121,6 +130,11 @@ class Users {
         }
         transactClient.quit()
     }
+    //this function does not append to existing restaurant id
+    //it replaces the exisiting restaurant id of the group
+    async setFetchedRestaurantLists(groupId, restIdList) {
+        await this.client.hset(groupId, 'fetchedRestaurants', JSON.stringify(restIdList))
+    }
     //@param: groupId : string, restIdList : string[] // list of restaurant id
     //@return: void
     async setFetchedRestaurantLists(groupId, restIdList) {
@@ -131,6 +145,9 @@ class Users {
     async getFetchedRestaurantLists(groupId){
         const tempStr = await this.client.hget(groupId, 'fetchedRestaurants')
         return JSON.parse(tempStr)
+    }
+    async removeGroup(groupId) {
+        await this.client.hdel(groupId)
     }
     //@param: groupId : string
     //@return: void
@@ -143,6 +160,9 @@ class Users {
         const tempStr = await this.client.hget(groupId, 'members')
         return JSON.parse(tempStr)
     }
+    async getMatch(groupId){
+        return await this.client.hget(groupId, 'restaurantId')
+    }
     //@param: groupId : string
     //@return: matched_restaurantId : string
     async getMatch(groupId){
@@ -154,7 +174,6 @@ class Users {
         await this.client.hset(groupId, 'restaurantId', resId )
     }
  }
-
  //this singleton class is used to store list of restaurant objects fetched from Yelp API. 
  class Restaurants {
      constructor() {
