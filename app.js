@@ -11,28 +11,17 @@ var bodyParser = require('body-parser');
 var azure = require('./azure.js');
 var request = require('request');
 var cheerio = require('cheerio');
-
-//------redis-------------------
-const redis = require('redis');
-const client = redis.createClient();
-
-client.on('connect', function() {
-	console.log('connected')
-})
-
+var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var groupRouter = require('./routes/groups');
 
 var app = express();
+const asyncRoute = (fn) => (...args) => 
+fn(args[0], args[1], args[2]).catch(args[2])
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
 
-// var mongoose = require('mongoose');
-// var mongodb_uri;
-
-// mongoose.connect(mongodb_uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const client = new ioRedis()
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,51 +31,69 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-//TODO: change /users to ?
-app.use('/users', usersRouter);
+app.use('/join', usersRouter);
+app.use('/groups', groupRouter);
 
-/* POST user to a group*/
-app.post('/:uid/:username', (req,res) =>{
-	const uid = req.params.uid;
-	const username = req.params.username;
-	const userid = uuid.v4();
-	console.log("in post "+userid);
-	// client.hmset(uid, "username", username);
-	client.hget(uid, "usernames", function(err,reply){
-		if(err){
-			res.status(404).send(err);
-		}else{
-			var obj = JSON.parse(reply); // username JSON array
-			console.log(obj);
-			obj.push(userid);
-			client.hset(uid, "usernames", JSON.stringify(obj));
-			client.hset(userid, "name", username, "likedRestaurants", '[]');
-			// res.status(200).send(reply);
-		}
-	});
-	console.log("after post "+userid);
-	client.hget(uid, "fetchedRestaurants", function(err,reply){
-		if(err){
-			res.status(404).send(err);
-		}else{
-			res.status(200).send(JSON.parse(reply));
-		}
-	});
-	// res.status(200).end();
+app.get('/algo', (req, res) => {
+	console.log('hello world')
+});
+
+app.get('/set-redis',(req, res) => {
+	client.set('user1Id', '908242' )
+	res.status(200).send()
 })
 
-/* GET user to a group*/
-app.get('/:uid', (req,res) =>{
-	const uid = req.params.uid;
-	console.log(uid);
-	// const username = req.params.username;
-	client.get(uid, function(err,reply){
-		if(err){
-			res.status(404).send(err);
-		}else{
-			res.status(200).send(reply);
+app.get('/get-redis', (req, res) => {
+	client.get('user1Id', (err, val) => {
+		if (val) {
+			console.log(val)
+			res.status(200).send(val);
 		}
-	});
+	})
+})
+
+async function setTransact() {
+	console.log("hello-me")
+	let retry = true ;
+	const transactionConnection = new ioRedis()
+	const list = ['1','2','3']
+	const listStr = JSON.stringify(list)
+	
+	await transactionConnection.set('new', listStr)
+	await transactionConnection.set('1', '1')
+	await transactionConnection.set('2','2')
+	await transactionConnection.set('3','3')
+	while(retry) {
+		await transactionConnection.watch("string key");
+			const val = await transactionConnection.get("string key");
+			const input = val + 'hello'
+		await transactionConnection.watch(list);
+		const val1 = await transactionConnection.get('1')
+			await transactionConnection.multi()
+			.set("string key", input)
+			.set('1', val1 + '1')
+			.exec((err, result) => {
+				console.log('first')
+				
+				if (result != null) {
+					console.log('suc tran')
+					retry = false	
+				}
+			})
+	}
+		console.log(retry)
+		const result = await transactionConnection.get("string key");
+		console.log(result)
+		const result1 = await transactionConnection.get("1")
+		console.log(result1)
+    transactionConnection.quit()
+}
+
+app.get('/test-transac', (req, res) =>{
+	console.log("print2")
+	console.log("hello")
+	setTransact()
+	res.status(200).send('success')
 })
 
 app.post("/api/summarizeurl", (req, res) => {
@@ -107,6 +114,7 @@ app.post("/api/summarizeurl", (req, res) => {
 		});
   	});
 });
+
 
 app.post("/api/summarize", (req, res) => {
   if(!req.body.text)
