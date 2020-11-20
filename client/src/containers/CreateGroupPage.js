@@ -26,11 +26,7 @@ const CreateGroup = () => {
                 margin: 30,
               }}
               variant="primary"
-<<<<<<< HEAD
-              onSubmit={() => { }}
-=======
               onSubmit={() => {}}
->>>>>>> fc35e448b67a2f4acba827eca4c6d1772298be27
             >
               Create Group
             </Button>
