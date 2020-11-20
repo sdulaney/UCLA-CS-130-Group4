@@ -5,21 +5,53 @@
 /* --------------------------------------- */
 
 .container {
+  justify-content: center
+  
 }
+
 .cardContainer {
   width: 500px;
-  height: 500px;
+  height: 700px;
   margin: auto;
-  border: 3px solid #73ad21;
+  border: 1.5px solid #747272;
+  background-size: cover;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  box-shadow: 0 0 50px -10px rgb(172, 160, 160);
+  overflow: hidden;
+
+  /* position: absolute; */
+  background-color: #ffffff;
+
+  /* centering cards */
+  position: absolute;
+  top: 53.5%;
+  margin: 0;
+  left: 50%;
+  /* margin-right: -50%; */
+  transform: translate(-50%, -50%)
+
+
+  /* display: flex; */
+  /* justify-content: center */
+  
+
 }
 .card_image {
-  width: 100%;
-  height: 200px;
+width: 100%;
+  height: 430px;
+  box-shadow: 0 0 2px;
+  display: flex;
+  justify-content: center
 }
+
 .buttonsContainer {
-  border: 3px solid #fff;
+  width: 100%;
+  text-align: center;
 }
+
 .buttonChildContainer {
+  padding: 1.2em 1em 0;
   width: 50%;
   float: left;
 }
@@ -31,6 +63,10 @@
 /* --------------------------------------- */
 .buttonStyle {
   color: red;
+  width: 50px;
+  height: 50px;
+  -moz-border-radius: 75px;
+  -webkit-border-radius: 75px;
 }
 .iconStyle {
   color: black;
@@ -44,11 +80,30 @@
 .resturantNameStyle {
   font-size: 2rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #424242;
 }
 
 .distanceTextStyle {
   font-size: 1rem;
+  color: #424242;
 }
 .titleText {
-  color: blue;
+  color: #424242;
+}
+
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* ---------> Nav Bar <----------------*/
+/* --------------------------------------- */
+/* --------------------------------------- */
+.mr-auto {
+  text-align: center;
+  /* background-color: grey; */
+  /* opacity: 0.55; */
+  justify-content: space-between;
+}
+
+.color-nav{
+  background-color: grey;
+  opacity: 0.65;
 }
