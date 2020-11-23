@@ -26,7 +26,7 @@ var groups = [];
 
 router.post('/create', async(req, res, next) => {
     // TODO: generate unique groupId using uuid library
-    var groupId = "10332339-fIV3H";
+    var groupId = "123e4567-e89b-12d3-a456-426614174000";
     var address = req.body.address;
     var city = req.body.city;
     var state = req.body.state;
