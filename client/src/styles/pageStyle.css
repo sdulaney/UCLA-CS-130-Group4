@@ -1,0 +1,34 @@
+.pageContainer {
+  /* background: #fff; */
+  display: flex;
+  justify-content: center;
+  position:absolute; 
+
+  /* full width & height for the background color */
+  height:100%; 
+  width:100%;
+  background: rgb(168, 107, 137);
+  background: linear-gradient(
+    0deg,
+    rgba(180, 58, 119, 1) 0%,
+    rgba(253, 29, 29, 1) 49%,
+    rgb(230, 204, 168) 98%
+  );
+}
+
+.elementsContainer {
+  
+}
+.header {
+  text-align: center;
+
+
+  
+  
+}
+
+.mr-auto {
+
+  text-align: center;
+  
+}

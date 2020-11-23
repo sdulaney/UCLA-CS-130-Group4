@@ -10,16 +10,20 @@ var bodyParser = require('body-parser');
 var azure = require('./azure.js');
 var request = require('request');
 var cheerio = require('cheerio');
-
+var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
 
 var app = express();
-
+var classes = require('./classes/classes')
+var users = classes.users
+var groups = classes.groups
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
+
+const client = new ioRedis()
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,8 +33,69 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
+
+app.get('/getme', async (req, res) => {
+	await users.insertNewUser('123','1234','hank')
+	console.log("hello")
+	await groups.insertNewGroup('123')
+	console.log("hello-world")
+	await groups.insertNewMember('123', '1234')
+	console.log(await users.getLikedRestaurant('1234'))
+	console.log(await users.getGroupId('1234'))
+	console.log(await groups.getMembers('123'))
+	const matchedRestaurant = await users.likeRestaurant('1234','in-n-out')
+	console.log(matchedRestaurant) //should return null
+	console.log(await users.getLikedRestaurant('1234')) //should return 'in-n-out'
+	res.status(200).send()
+})
+
+/*
+async function setTransact() {
+	console.log("hello-me")
+	let retry = true ;
+	const transactionConnection = new ioRedis()
+	const list = ['1','2','3']
+	const listStr = JSON.stringify(list)
+	
+	await transactionConnection.set('new', listStr)
+	await transactionConnection.set('1', '1')
+	await transactionConnection.set('2','2')
+	await transactionConnection.set('3','3')
+	while(retry) {
+		await transactionConnection.watch("string key");
+			const val = await transactionConnection.get("string key");
+			const input = val + 'hello'
+		await transactionConnection.watch(list);
+		const val1 = await transactionConnection.get('1')
+			await transactionConnection.multi()
+			.set("string key", input)
+			.set('1', val1 + '1')
+			.exec((err, result) => {
+				console.log('first')
+				
+				if (result != null) {
+					console.log('suc tran')
+					retry = false	
+				}
+			})
+	}
+		console.log(retry)
+		const result = await transactionConnection.get("string key");
+		console.log(result)
+		const result1 = await transactionConnection.get("1")
+		console.log(result1)
+    transactionConnection.quit()
+}
+
+app.get('/test-transac', (req, res) =>{
+	console.log("print2")
+	console.log("hello")
+	setTransact()
+	res.status(200).send('success')
+})
+*/
 
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)
@@ -50,6 +115,7 @@ app.post("/api/summarizeurl", (req, res) => {
 		});
   	});
 });
+
 
 app.post("/api/summarize", (req, res) => {
   if(!req.body.text)
