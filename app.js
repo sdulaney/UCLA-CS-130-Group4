@@ -14,11 +14,16 @@ var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
+// var swipeRouter = require('./routes/swipe');
+// const {groups, users, restaurants} = require('./classes/classes.js');
+
 
 var app = express();
-var classes = require('./classes/classes')
-var users = classes.users
-var groups = classes.groups
+var classes = require('./classes/classes');
+const { exit } = require('process');
+var users = classes.users;
+var groups = classes.groups;
+var restaurants = classes.restaurants;
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -26,6 +31,7 @@ var groups = classes.groups
 const client = new ioRedis()
 
 app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -36,6 +42,34 @@ app.use('/', indexRouter);
 app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
 
+//Parham
+app.post('/swipe/:groupId/:userId/:restaurantId', async (req, res) => {
+	//if we're here, then user has liked restaurant
+	//need to store in redis
+	//  add restaurantId under user's likedRestaurant list
+	const groupId = req.params.groupId;
+	const userId = req.params.userId;
+	const restaurantId = req.params.restaurantId;
+
+	if (users.userExists(userId) === 0) {
+		console.log("user doesn't exist:", userId);
+		res.status(404).send();
+	}
+
+	if (users.userExists(userId) === 1) {
+		await users.likeRestaurant(userId, restaurantId);	
+	}
+
+	res.status(200).send();
+	console.log('userId:', userId)
+	console.log('likes restaurantId:', restaurantId);
+	// console.log(await users.getLikedRestaurant(userId));
+});
+
+//initializes redis with some dummy data
+//userId: 1234
+//groupId: 123
+//restaurantId: 567
 app.get('/getme', async (req, res) => {
 	await users.insertNewUser('123','1234','hank')
 	console.log("hello")
@@ -45,7 +79,8 @@ app.get('/getme', async (req, res) => {
 	console.log(await users.getLikedRestaurant('1234'))
 	console.log(await users.getGroupId('1234'))
 	console.log(await groups.getMembers('123'))
-	const matchedRestaurant = await users.likeRestaurant('1234','in-n-out')
+	//restaurantId: "567"
+	const matchedRestaurant = await users.likeRestaurant('1234','567')
 	console.log(matchedRestaurant) //should return null
 	console.log(await users.getLikedRestaurant('1234')) //should return 'in-n-out'
 	res.status(200).send()

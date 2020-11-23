@@ -47,6 +47,7 @@ class Users {
         const groupId = await this.getGroupId(userId)
        return await checkForMatch(userId,groupId,resId)
     }
+    
     async removeUser(userId) {
         await this.client.del(userId)
     }
@@ -70,6 +71,17 @@ class Users {
     //@return: groupId : string
    async getGroupId(userId){
         return await this.client.hget(userId,'groupId')
+    }
+
+    //@param: userId : string
+    //@param: groupId : string
+    //return: 1 if user exists, 0 if not
+    async userExists(userId) {
+        const client = new ioRedis();
+        if (client.exists === 1) 
+            return 1;
+        else 
+            return 0;
     }
  }
 
