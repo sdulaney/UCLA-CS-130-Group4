@@ -1,13 +1,5 @@
 var ioRedis = require('ioredis')
 
-//json classess
-//Group
-//- groupId
-//- restaurantsId
-//-members (User)
-//User
-//-name
-//-map<groupId, preferredRestaurant>
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -17,10 +9,10 @@ function sleep(ms){
 async function checkForMatch(userId, groupId, restaurantId) {
     //check for quick result
     const client = new ioRedis()
-    const match = await client.hget(groupId, 'restaurantId')
-    if (match) {
+    const matchStr = await client.hget(groupId, 'restaurantId')
+    if (matchStr) {
         //already has result
-        if ( restaurantId === match ) {
+        if ( restaurantId == matchStr) {
             return restaurantId //matched
         }
         else {
@@ -35,9 +27,7 @@ async function checkForMatch(userId, groupId, restaurantId) {
     let returnVal = null;
     while(retry) {
         await transactClient.watch(groupId);
-        console.log(groupId)
         const memStr = await transactClient.hget(groupId, 'members');
-        console.log(memStr)
         const memObj = JSON.parse(memStr)
         await transactClient.watch(memObj);
         for (let i =0; i < memObj.length; i++){
@@ -50,7 +40,7 @@ async function checkForMatch(userId, groupId, restaurantId) {
                 }
             }
         }
-        if (count == memObj.length) {
+        if (count == memObj.length && count != 1) {
             //matched successfully in the whole group
             await transactClient.multi()
                 .hset(groupId, 'restaurantId', restaurantId)
