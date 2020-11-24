@@ -53,7 +53,7 @@ export default class CardDisplay extends React.Component {
             alt="restaurant"
             className="card_image"
           />
-          <Card.Body>
+          <Card.Body waves>
             <h2 className="resturantNameStyle">{this.props.resturantName}</h2>
             <Card.Text>
               <h6> Implement Rating Here </h6>
@@ -88,3 +88,9 @@ export default class CardDisplay extends React.Component {
     );
   }
 }
+
+
+
+
+
+

@@ -24,7 +24,7 @@ export default class InputField extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div data-placeholder='data-placeholder'>
         <h3 className="input">{this.props.fieldName} </h3>
         <form onSubmit={this.handleSubmit}>
           <input

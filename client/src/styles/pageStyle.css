@@ -7,24 +7,20 @@
   /* full width & height for the background color */
   height:100%; 
   width:100%;
-  background: rgb(168, 107, 137);
+  background: rgb(180,58,119);
   background: linear-gradient(
     0deg,
     rgba(180, 58, 119, 1) 0%,
-    rgba(253, 29, 29, 1) 49%,
-    rgb(230, 204, 168) 98%
+    rgba(253,29,29,0.7371323529411764) 0%,
+    rgba(252,176,69,1) 100%
   );
 }
 
-.elementsContainer {
+/* .elementsContainer {
   
-}
+} */
 .header {
-  text-align: center;
-
-
-  
-  
+  text-align: center;  
 }
 
 .mr-auto {
