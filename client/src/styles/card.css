@@ -5,8 +5,7 @@
 /* --------------------------------------- */
 
 .container {
-  justify-content: center
-  
+  justify-content: center;
 }
 
 .cardContainer {
@@ -29,20 +28,17 @@
   margin: 0;
   left: 50%;
   /* margin-right: -50%; */
-  transform: translate(-50%, -50%)
-
+  transform: translate(-50%, -50%);
 
   /* display: flex; */
   /* justify-content: center */
-  
-
 }
 .card_image {
-width: 100%;
+  width: 100%;
   height: 430px;
   box-shadow: 0 0 2px;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .buttonsContainer {
@@ -103,7 +99,7 @@ width: 100%;
   justify-content: space-between;
 }
 
-.color-nav{
+.color-nav {
   background-color: grey;
   opacity: 0.65;
 }
