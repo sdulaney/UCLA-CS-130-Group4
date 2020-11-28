@@ -18,7 +18,6 @@ var matchRouter = require('./routes/getMatch')
 
 var app = express();
 var cors = require('cors');
-app.use(cors());
 var classes = require('./classes/classes')
 var users = classes.users
 var groups = classes.groups
@@ -28,7 +27,7 @@ var restaurants = classes.restaurants
 // app.set('view engine', 'jade');
 
 const client = new ioRedis()
-
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
