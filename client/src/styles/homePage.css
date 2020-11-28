@@ -1,0 +1,49 @@
+.textContainer {
+  position: absolute;
+  width: 898px;
+  height: 72px;
+  left: 271px;
+  top: 169px;
+}
+.text {
+  font-family: PT Sans Caption;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: center;
+}
+.createNewGroup {
+  position: absolute;
+  width: 316px;
+  height: 47px;
+  left: 332px;
+  top: 347px;
+
+  font-family: PT Sans Caption;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 47px;
+  /* identical to box height */
+  text-align: center;
+
+  color: #000000;
+}
+.joinGroup {
+  position: absolute;
+  width: 337px;
+  height: 47px;
+  left: 771px;
+  top: 347px;
+
+  font-family: PT Sans Caption;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 47px;
+  /* identical to box height */
+  text-align: center;
+
+  color: #000000;
+}
