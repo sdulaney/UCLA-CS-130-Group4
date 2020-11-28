@@ -32,7 +32,7 @@ router.post('/create', async(req, res, next) => {
         // Set fetchedRestaurants for new group in db
         await groups.setFetchedRestaurantLists(groupId, values); 
     });
-    res.redirect(200, '/join/${groupId}'); 
+    res.status(200).send(groupId); 
 });
 
 function requestPromise(options) {
