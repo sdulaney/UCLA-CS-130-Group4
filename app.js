@@ -14,11 +14,13 @@ var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
+var matchRouter = require('./routes/getMatch')
 
 var app = express();
 var classes = require('./classes/classes')
 var users = classes.users
 var groups = classes.groups
+var restaurants = classes.restaurants
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -35,67 +37,48 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
+app.use('/match', matchRouter);
 
 app.get('/getme', async (req, res) => {
+	//insert new user groupId: 123, userId: 1234, name : hank
 	await users.insertNewUser('123','1234','hank')
-	console.log("hello")
+	//create a new group. groupId : 123
 	await groups.insertNewGroup('123')
-	console.log("hello-world")
+	//insert new member into groupId
 	await groups.insertNewMember('123', '1234')
 	console.log(await users.getLikedRestaurant('1234'))
 	console.log(await users.getGroupId('1234'))
 	console.log(await groups.getMembers('123'))
+	//this likeRestaurant function inserts the restaurantId into user's liked list
+	//and find a match, it return restaurantId if match found. null if match not found
 	const matchedRestaurant = await users.likeRestaurant('1234','in-n-out')
 	console.log(matchedRestaurant) //should return null
 	console.log(await users.getLikedRestaurant('1234')) //should return 'in-n-out'
+	console.log('================')
+	await users.likeRestaurant('1234', 'mcdonald')
+	console.log(await users.getLikedRestaurant('1234'))
+	//============
+	await users.insertNewUser('123','12345','hank1')
+	await groups.insertNewMember('123','12345')
+	let match = await users.likeRestaurant('12345','in-n-out')
+	console.log(`this group has a matched restaurant: ${match}`)
+	console.log(`Matched result is ${await groups.getMatch('123')}`)
+	//=============
+	await users.insertNewUser('123', '123456', 'hank2')
+	await groups.insertNewMember('123', '123456')
+	match = await users.likeRestaurant('123456', 'mcdonald' )
+	console.log(`match restaurant is ${match}`)
+	console.log(`Match result is ${await groups.getMatch('123')}`)
+	console.log(`1234 user has ${await users.getLikedRestaurant('1234')}`)
+	console.log(`12345 user has ${await users.getLikedRestaurant('12345')}`)
+	console.log(`123456 user has ${await users.getLikedRestaurant('123456')}`)
+	console.log(`members: ${await groups.getMembers('123')} `)
+	groups.removeGroup('123')
+	users.removeUser('1234')
+	users.removeUser('12345')
+	users.removeUser('123456')
 	res.status(200).send()
 })
-
-/*
-async function setTransact() {
-	console.log("hello-me")
-	let retry = true ;
-	const transactionConnection = new ioRedis()
-	const list = ['1','2','3']
-	const listStr = JSON.stringify(list)
-	
-	await transactionConnection.set('new', listStr)
-	await transactionConnection.set('1', '1')
-	await transactionConnection.set('2','2')
-	await transactionConnection.set('3','3')
-	while(retry) {
-		await transactionConnection.watch("string key");
-			const val = await transactionConnection.get("string key");
-			const input = val + 'hello'
-		await transactionConnection.watch(list);
-		const val1 = await transactionConnection.get('1')
-			await transactionConnection.multi()
-			.set("string key", input)
-			.set('1', val1 + '1')
-			.exec((err, result) => {
-				console.log('first')
-				
-				if (result != null) {
-					console.log('suc tran')
-					retry = false	
-				}
-			})
-	}
-		console.log(retry)
-		const result = await transactionConnection.get("string key");
-		console.log(result)
-		const result1 = await transactionConnection.get("1")
-		console.log(result1)
-    transactionConnection.quit()
-}
-
-app.get('/test-transac', (req, res) =>{
-	console.log("print2")
-	console.log("hello")
-	setTransact()
-	res.status(200).send('success')
-})
-*/
 
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)

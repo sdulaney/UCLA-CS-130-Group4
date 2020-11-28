@@ -11,7 +11,7 @@ const CreateGroup = () => {
       <div className="pageContainer">
         <div className="elementsContainer">
           <h1 className="headers"> Create Event</h1>
-          <InputField fieldName={"Your Name"} />
+          <InputField placeholder="Username" fieldName={"Your Name"} />
           <InputField fieldName={"Street Address"} />
           <InputField fieldName={"City"} />
           <DropdownField inputList={us_states} fieldName={"State"} />
@@ -20,12 +20,16 @@ const CreateGroup = () => {
 
           <Link to="/joingroup">
             <Button
+              className="ButtonStyle"
               style={{
-                paddingLeft: 50,
-                paddingRight: 50,
-                margin: 30,
+                paddingLeft: 30,
+                paddingRight: 30,
+                margin: 75,
+                color: "white",
               }}
-              variant="primary"
+              // variant="contained"
+              variant="secondary"
+              size="medium"
               onSubmit={() => {}}
             >
               Create Group

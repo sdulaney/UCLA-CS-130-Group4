@@ -81,10 +81,8 @@ class Users {
     //@param: groupId : string
     //@return: void
     async insertNewGroup(groupId) {
-        console.log("break point")
         const data = JSON.stringify([])
         await this.client.hset(groupId, 'members', data, 'fetchedRestaurants', data)
-        console.log("break point2")
     }
     //@param: groupId : string, userId : string
     //@return: void
@@ -99,6 +97,7 @@ class Users {
             memStr = JSON.stringify(memObj)
             await transactClient.multi()
                     .hset(groupId, 'members', memStr)
+                    .hdel(groupId, 'restaurantId')
                     .exec((err, result) => {
                         if (result) {
                             retry = false
@@ -152,7 +151,7 @@ class Users {
     //@param: groupId : string
     //@return: void
     async removeGroup(groupId) {
-        await this.client.hdel(groupId)
+        await this.client.del(groupId)
     }
     //@param: groupId : string
     //@return: list_userId : string[]
@@ -182,7 +181,7 @@ class Users {
      //@param: groupId : string, restList : Object[] // list of restaurant object
      //@return: void
      async insertListRestaurantObj(groupId, restList) {
-         const tempStr = JSON.stringify(restlist) 
+         const tempStr = JSON.stringify(restList) 
          await this.client.hset('restaurantObj', groupId, tempStr)
      }
      //@param: groupId : string

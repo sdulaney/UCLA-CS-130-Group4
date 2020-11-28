@@ -10,7 +10,7 @@ const App = () => {
     <div>
       <Navbar className="color-nav" fixed="top" bg="dark" variant="dark">
         <Navbar.Brand href="/">Chicken Tinder</Navbar.Brand>
-        <div style={{ position: "absolute", right: 400 }}>
+        <div style={{ position: "absolute", right: 200 }}>
           <Nav className="mr-auto">
             {/* <Nav className="navbar navbar-default navbar-fixed-top"> */}
             <Nav.Link

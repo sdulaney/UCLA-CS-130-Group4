@@ -12,19 +12,21 @@ const JoinGroupPage = () => {
         <InputField fieldName={"Group URL"} />
         {/* Parse groupId from GroupURL input field,then add it to the path as swipe/{groupId} */}
         <Link to="/swipe">
-          <Button
+          <Button className="ButtonStyle"
             style={{
-              paddingLeft: 50,
-              paddingRight: 50,
-              margin: 30,
+              paddingLeft: 30,
+              paddingRight: 30,
+              margin: 75,
+              color: "white"
             }}
-            variant="primary"
+            variant="secondary"
+            size="medium"
           >
             Start Swipping
           </Button>
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
 
