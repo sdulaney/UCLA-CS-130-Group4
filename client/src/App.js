@@ -4,14 +4,16 @@ import JoinGroupPage from "./containers/JoinGroupPage";
 import SwippingPage from "./containers/SwippingPage";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import HomePage from "./containers/HomePage";
 
 const App = () => {
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="color-nav" fixed="top" bg="dark" variant="dark">
         <Navbar.Brand href="/">Chicken Tinder</Navbar.Brand>
-        <div style={{ marginLeft: 1000 }}>
+        <div style={{ position: "absolute", right: 200 }}>
           <Nav className="mr-auto">
+            {/* <Nav className="navbar navbar-default navbar-fixed-top"> */}
             <Nav.Link
               style={{ fontSize: 20, color: "white" }}
               href="/creategroup"
@@ -30,7 +32,7 @@ const App = () => {
       <div>
         <BrowserRouter>
           <div>
-            <Route path="/" exact component={CreateGroup} />
+            <Route path="/" exact component={HomePage} />
             <Route path="/creategroup" component={CreateGroup} />
             <Route path="/joingroup" component={JoinGroupPage} />
             <Route path="/swipe" component={SwippingPage} />

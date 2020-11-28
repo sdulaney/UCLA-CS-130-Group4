@@ -1,5 +1,5 @@
-.container {
-}
+/* .container {
+} */
 
 .inputfield {
   width: 330px;
@@ -9,13 +9,12 @@
   transition: 0.3s all;
 }
 .inputfield:hover {
-  background-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+  background-color: rgb(255, 255, 255);
+  /* box-shadow: 0px 4px 20px 0px; */
+  clear: both;
 }
 .input {
-  color: black;
-  position: center;
-  margin-left: 120px;
+  color: white;
   width: 100%;
   height: 100%;
   left: 0;
@@ -26,4 +25,48 @@
   background: none;
   font-family: "Roboto Mono", monospace;
   transition: all 0.5s ease;
+  clear: both;
+  text-align: left;
+  
 }
+
+.elementsContainer{
+  position: absolute;
+  top: 53.5%;
+  margin: 0;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+.headers{
+  text-align: center;
+  color: #000000;
+
+}
+
+.inputfield{
+  color: #707070;
+  font-size: 25px;
+  text-align: left;
+  background-color: white;
+  border:solid #ffffff;
+}
+
+
+.ButtonStyle{
+  position: center;
+  background: rgb(180,58,119);
+  background: linear-gradient(0deg,
+ rgba(180,58,119,1) 0%,
+ rgba(228,3,3,1) 0%,
+ rgba(252,176,69,1) 100%);
+ border: none;
+ display: inline-block;
+ margin: 4px 2px;
+ cursor: pointer;
+ border-radius: 16px;
+  
+}
+
+ 
+  
+ 

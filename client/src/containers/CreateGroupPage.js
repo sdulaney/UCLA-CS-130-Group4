@@ -5,13 +5,30 @@ import { us_states } from "../config";
 import "../styles/pageStyle.css";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 const CreateGroup = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const user = {
+      address: "641 Gayley Ave",
+      city: "Los Angeles",
+      state: "CA",
+      zipCode: "90024",
+      radius: "14",
+    };
+    alert("Heeey");
+    axios.post(`http://localhost:3000/groups/create`, { user }).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
+  };
   return (
     <div>
       <div className="pageContainer">
         <div className="elementsContainer">
           <h1 className="headers"> Create Event</h1>
-          <InputField fieldName={"Your Name"} />
+          <InputField placeholder="Username" fieldName={"Your Name"} />
           <InputField fieldName={"Street Address"} />
           <InputField fieldName={"City"} />
           <DropdownField inputList={us_states} fieldName={"State"} />
@@ -20,12 +37,16 @@ const CreateGroup = () => {
 
           <Link to="/joingroup">
             <Button
+              className="ButtonStyle"
               style={{
-                paddingLeft: 50,
-                paddingRight: 50,
-                margin: 30,
+                paddingLeft: 30,
+                paddingRight: 30,
+                margin: 75,
+                color: "white",
               }}
-              variant="primary"
+              // variant="contained"
+              variant="secondary"
+              size="medium"
               onSubmit={() => {}}
             >
               Create Group
