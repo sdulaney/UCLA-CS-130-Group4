@@ -2,31 +2,14 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var yelp = require('../yelp.js');
+var uuid = require('uuid');
 
-class Restaurant {
-    constructor(name, imageUrl, rating, distance, phone, location) {
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.rating = rating;
-        this.distance = distance;
-        this.phone = phone;
-        this.location = location;
-    }
-}
-
-class Group {
-    constructor(groupId, restaurants, members) {
-      this.groupId = groupId;
-      this.restaurants = restaurants;
-      this.members = members;
-    }
-}
-
-var groups = [];
+const { groups,users,restaurants } = require('../classes/classes.js');
 
 router.post('/create', async(req, res, next) => {
-    // TODO: generate unique groupId using uuid library
-    var groupId = "123e4567-e89b-12d3-a456-426614174000";
+    const groupId = uuid.v4();
+    // Create new group in db
+    await groups.insertNewGroup(groupId);
     var address = req.body.address;
     var city = req.body.city;
     var state = req.body.state;
@@ -44,29 +27,10 @@ router.post('/create', async(req, res, next) => {
         url: `https://api.yelp.com/v3/businesses/search?limit=10&categories=Restaurant&location=${addressFormatted}&radius=${radius}`,
         headers: headers
     }));
-    Promise.all(promises).then(values => {
-        // TODO: persist Group, Restaurant data
-        // console.log(JSON.parse(values));
-        var data = JSON.parse(values);
-        var restaurants = [];
-        for (const property in data) {
-            if (property == 'businesses') {
-                console.log(`${property}`);
-                for (const index in data[property]) {
-                    // console.log(`${data[property][index]['name']}`);
-                    var locationStr = data[property][index]['location']['address1'] + ', ' + data[property][index]['location']['city'] + ', ' + data[property][index]['location']['state'] + ' ' + data[property][index]['location']['zip_code'];
-                    restaurants.push(new Restaurant(
-                        data[property][index]['name'],
-                        data[property][index]['image_url']), 
-                        data[property][index]['rating'], 
-                        data[property][index]['distance'], 
-                        data[property][index]['phone'], 
-                        locationStr
-                    );
-                }
-            }
-        }
-        console.log(restaurants);
+    var data = {};
+    Promise.all(promises).then(async(values) => {
+        // Set fetchedRestaurants for new group in db
+        await groups.setFetchedRestaurantLists(groupId, values); 
     });
     res.redirect(200, '/join/${groupId}'); 
 });
