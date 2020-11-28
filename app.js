@@ -14,9 +14,7 @@ var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
-// var swipeRouter = require('./routes/swipe');
-// const {groups, users, restaurants} = require('./classes/classes.js');
-
+var swipeRouter = require('./routes/swipe');
 
 var app = express();
 var classes = require('./classes/classes');
@@ -41,30 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
-
-//Parham
-app.post('/swipe/:groupId/:userId/:restaurantId', async (req, res) => {
-	//if we're here, then user has liked restaurant
-	//need to store in redis
-	//  add restaurantId under user's likedRestaurant list
-	const groupId = req.params.groupId;
-	const userId = req.params.userId;
-	const restaurantId = req.params.restaurantId;
-
-	if (users.userExists(userId) === 0) {
-		console.log("user doesn't exist:", userId);
-		res.status(404).send();
-	}
-
-	if (users.userExists(userId) === 1) {
-		await users.likeRestaurant(userId, restaurantId);	
-	}
-
-	res.status(200).send();
-	console.log('userId:', userId)
-	console.log('likes restaurantId:', restaurantId);
-	// console.log(await users.getLikedRestaurant(userId));
-});
+app.use('/swipe', swipeRouter);
 
 //initializes redis with some dummy data
 //userId: 1234
