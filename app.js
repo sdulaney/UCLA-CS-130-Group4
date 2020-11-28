@@ -17,6 +17,8 @@ var groupRouter = require('./routes/groups');
 var matchRouter = require('./routes/getMatch')
 
 var app = express();
+var cors = require('cors');
+app.use(cors());
 var classes = require('./classes/classes')
 var users = classes.users
 var groups = classes.groups
