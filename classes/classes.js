@@ -131,9 +131,6 @@ class Users {
     }
     //this function does not append to existing restaurant id
     //it replaces the exisiting restaurant id of the group
-    async setFetchedRestaurantLists(groupId, restIdList) {
-        await this.client.hset(groupId, 'fetchedRestaurants', JSON.stringify(restIdList))
-    }
     //@param: groupId : string, restIdList : string[] // list of restaurant id
     //@return: void
     async setFetchedRestaurantLists(groupId, restIdList) {
