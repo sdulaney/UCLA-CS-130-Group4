@@ -8,7 +8,8 @@ const SwippingPage = (props) => {
   const urlInfo = props.location.state.URL;
   if (urlInfo.userName === "") urlInfo.userName = "john";
   const [yelp_restaurants, setRestaurants] = useState([]);
-
+  const [userId, setUserId] = useState();
+  const [restaurantId, setRestaurantId] = useState();
   useEffect(() => {
     try {
       axios
@@ -16,6 +17,8 @@ const SwippingPage = (props) => {
           `http://localhost:3000/join/${urlInfo.groupId}/${urlInfo.userName}`
         )
         .then((response) => {
+          // console.log(response.data.restaurantList[0]);
+          setUserId(response.data.userid);
           const parseRest = JSON.parse(response.data.restaurantList[0]);
           setRestaurants(parseRest.businesses);
         })
@@ -27,9 +30,28 @@ const SwippingPage = (props) => {
     }
   }, [urlInfo.groupId, urlInfo.userName]);
 
-  const onSwipe = (direction) => {
+  const onSwipe = (direction, restId) => {
     console.log("You swiped: " + direction);
+    // console.log("Rest ID " + restId);
+    //console.log("User ID" + userId);
+    //console.log("Group ID" + urlInfo.groupId);
     // If direction==="right" -> like restaurant else dislike
+    if (direction === "right") {
+      try {
+        axios
+          .post(
+            `http://localhost:3000/swipe/${urlInfo.groupId}/${userId}/${restId}`
+          )
+          .then((response) => {
+            console.log("Response", response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const onCardLeftScreen = (myIdentifier) => {
@@ -42,7 +64,7 @@ const SwippingPage = (props) => {
           {yelp_restaurants.map((e, i) => (
             <div key={i}>
               <TinderCard
-                onSwipe={onSwipe}
+                onSwipe={(direction, id) => onSwipe(direction, (id = e.id))}
                 onCardLeftScreen={() => onCardLeftScreen("fooBar")}
                 flickOnSwipe={true}
                 preventSwipe={["up", "down"]}
