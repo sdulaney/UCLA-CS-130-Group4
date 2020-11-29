@@ -14,7 +14,8 @@ var ioRedis = require('ioredis');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var groupRouter = require('./routes/groups');
-var matchRouter = require('./routes/getMatch')
+var matchRouter = require('./routes/getMatch');
+var swipeRouter = require('./routes/swipe');
 
 var app = express();
 var cors = require('cors');
@@ -22,6 +23,9 @@ var classes = require('./classes/classes')
 var users = classes.users
 var groups = classes.groups
 var restaurants = classes.restaurants
+
+const { exit } = require('process');
+
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -29,6 +33,7 @@ var restaurants = classes.restaurants
 const client = new ioRedis()
 app.use(cors());
 app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -39,7 +44,12 @@ app.use('/', indexRouter);
 app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
 app.use('/match', matchRouter);
+app.use('/swipe', swipeRouter);
 
+//initializes redis with some dummy data
+//userId: 1234
+//groupId: 123
+//restaurantId: 567
 app.get('/getme', async (req, res) => {
 	//insert new user groupId: 123, userId: 1234, name : hank
 	await users.insertNewUser('123','1234','hank')
@@ -50,9 +60,8 @@ app.get('/getme', async (req, res) => {
 	console.log(await users.getLikedRestaurant('1234'))
 	console.log(await users.getGroupId('1234'))
 	console.log(await groups.getMembers('123'))
-	//this likeRestaurant function inserts the restaurantId into user's liked list
-	//and find a match, it return restaurantId if match found. null if match not found
-	const matchedRestaurant = await users.likeRestaurant('1234','in-n-out')
+	//restaurantId: "567"
+	const matchedRestaurant = await users.likeRestaurant('1234','567')
 	console.log(matchedRestaurant) //should return null
 	console.log(await users.getLikedRestaurant('1234')) //should return 'in-n-out'
 	console.log('================')
@@ -79,6 +88,29 @@ app.get('/getme', async (req, res) => {
 	users.removeUser('12345')
 	users.removeUser('123456')
 	res.status(200).send()
+})
+
+app.get('/populate-dummy-data', async (req, res) => {
+	//insert new user groupId: 123, userId: 1234, name : hank
+	await users.insertNewUser('123','1234','hank')
+	//insert multiple users
+	await users.insertNewUser('123','12345','hank1')
+	await users.insertNewUser('123', '123456', 'hank2')	
+	//create a new group. groupId : 123
+	await groups.insertNewGroup('123')
+	//insert new members into groupId
+	await groups.insertNewMember('123', '1234')
+	await groups.insertNewMember('123', '12345')
+	await groups.insertNewMember('123', '123456')
+	//restaurantId: "567"
+	await users.likeRestaurant('1234','567')
+	await users.likeRestaurant('1234','678')
+	await users.likeRestaurant('12345','789')
+	await users.likeRestaurant('12345', '567')
+	await users.likeRestaurant('123456', '789')
+	await users.likeRestaurant('123456', '567')
+	console.log(await groups.getMatch('123')) //should return '567'
+	res.status(200).send('dummy data successfully populated')
 })
 
 app.post("/api/summarizeurl", (req, res) => {
