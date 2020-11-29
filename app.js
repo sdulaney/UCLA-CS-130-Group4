@@ -90,6 +90,29 @@ app.get('/getme', async (req, res) => {
 	res.status(200).send()
 })
 
+app.get('/populate-dummy-data', async (req, res) => {
+	//insert new user groupId: 123, userId: 1234, name : hank
+	await users.insertNewUser('123','1234','hank')
+	//insert multiple users
+	await users.insertNewUser('123','12345','hank1')
+	await users.insertNewUser('123', '123456', 'hank2')	
+	//create a new group. groupId : 123
+	await groups.insertNewGroup('123')
+	//insert new members into groupId
+	await groups.insertNewMember('123', '1234')
+	await groups.insertNewMember('123', '12345')
+	await groups.insertNewMember('123', '123456')
+	//restaurantId: "567"
+	await users.likeRestaurant('1234','567')
+	await users.likeRestaurant('1234','678')
+	await users.likeRestaurant('12345','789')
+	await users.likeRestaurant('12345', '567')
+	await users.likeRestaurant('123456', '789')
+	await users.likeRestaurant('123456', '567')
+	console.log(await groups.getMatch('123')) //should return '567'
+	res.status(200).send('dummy data successfully populated')
+})
+
 app.post("/api/summarizeurl", (req, res) => {
 	if(!req.body.url)
   		return res.send("[ERROR] Missing field 'url'");
