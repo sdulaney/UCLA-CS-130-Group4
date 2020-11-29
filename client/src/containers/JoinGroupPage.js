@@ -5,7 +5,6 @@ import "../styles/pageStyle.css";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 export default class JoinGroupPage extends React.Component {
-  restaurantsInfo = this.props.location.state.groupData;
   state = {
     groupId: "",
     userName: "",
@@ -23,17 +22,23 @@ export default class JoinGroupPage extends React.Component {
     }
   };
   componentDidMount() {
-    axios
-      .post(`http://localhost:3000/groups/create`, {
-        address: this.restaurantsInfo.address,
-        city: this.restaurantsInfo.city,
-        state: this.restaurantsInfo.stateName,
-        zipCode: this.restaurantsInfo.zipCode,
-        radius: this.restaurantsInfo.radius,
-      })
-      .then((res) => {
-        this.setState({ groupId: res.data });
-      });
+    //const restaurantsInfo = this.props.location.state.groupData;
+    try {
+      axios
+        .post(`http://localhost:3000/groups/create`, {
+          address: this.props.location.state.groupData.address,
+          city: this.props.location.state.groupData.city,
+          state: this.props.location.state.groupData.stateName,
+          zipCode: this.props.location.state.groupData.zipCode,
+          radius: this.props.location.state.groupData.radius,
+        })
+        .then((res) => {
+          this.setState({ groupId: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {}
   }
   render() {
     return (

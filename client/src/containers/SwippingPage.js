@@ -2,10 +2,31 @@ import React, { useEffect, useState } from "react";
 import CardDisplay from "../components/Card";
 import "../styles/pageStyle.css";
 import "../restaurantsData";
-import resturants from "../restaurantsData";
 import TinderCard from "react-tinder-card";
+import axios from "axios";
+const SwippingPage = (props) => {
+  const urlInfo = props.location.state.URL;
+  if (urlInfo.userName === "") urlInfo.userName = "john";
+  const [yelp_restaurants, setRestaurants] = useState([]);
 
-const SwippingPage = ({ props }) => {
+  useEffect(() => {
+    try {
+      axios
+        .post(
+          `http://localhost:3000/join/${urlInfo.groupId}/${urlInfo.userName}`
+        )
+        .then((response) => {
+          const parseRest = JSON.parse(response.data.restaurantList[0]);
+          setRestaurants(parseRest.businesses);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [urlInfo.groupId, urlInfo.userName]);
+
   const onSwipe = (direction) => {
     console.log("You swiped: " + direction);
     // If direction==="right" -> like restaurant else dislike
@@ -18,7 +39,7 @@ const SwippingPage = ({ props }) => {
     <div>
       <div className="pageContainer">
         <div className="elementsContainer">
-          {resturants.map((e, i) => (
+          {yelp_restaurants.map((e, i) => (
             <div key={i}>
               <TinderCard
                 onSwipe={onSwipe}
@@ -27,9 +48,9 @@ const SwippingPage = ({ props }) => {
                 preventSwipe={["up", "down"]}
               >
                 <CardDisplay
-                  imageUrl={e.imageUrl}
+                  imageUrl={e.image_url}
                   isMatched={false}
-                  resturantName={e.resturantName}
+                  resturantName={e.name}
                   Distance={e.distance}
                 />
               </TinderCard>
