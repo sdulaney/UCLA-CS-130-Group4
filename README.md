@@ -5,6 +5,7 @@
 - `npm install`
 - `npm start`
 - Open http://localhost:3001/ to see the app
+- Open http://localhost:3001/getme to populate redis with some dummy data
 
 Instruction for install Redis
 - $cd UCLA-CS-130-Group4
