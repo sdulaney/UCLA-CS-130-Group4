@@ -16,20 +16,24 @@ export default class CreateGroup extends React.Component {
     radius: "",
     zipCode: "",
   };
-  handleSubmit = (event) => {
-    event.preventDefault();
-    axios
-      .post(`http://localhost:3000/groups/create`, {
-        address: this.state.address,
-        city: this.state.city,
-        state: this.state.stateName,
-        zipCode: this.state.zipCode,
-        radius: this.state.radius,
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  };
+  // Fix unmounting components
+
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   axios
+  //     .post(`http://localhost:3000/groups/create`, {
+  //       address: this.state.address,
+  //       city: this.state.city,
+  //       state: this.state.stateName,
+  //       zipCode: this.state.zipCode,
+  //       radius: this.state.radius,
+  //     })
+  //     .then((res) => {
+  //       // console.log(res);
+  //       this.setState({ groupId: res.data });
+  //     });
+  // };
   handleChange = (event, type) => {
     switch (type) {
       case "address":
@@ -63,9 +67,12 @@ export default class CreateGroup extends React.Component {
               // onClick={() => handleSubmit}
               onClick={() => {
                 axios
-                  .post("http://localhost:3000/join/7B/groupId=7D")
+                  .post(
+                    "http://localhost:3000/join/4d7705dd-380d-41ea-a47d-f7aea0d3b3a4/gamal"
+                  )
                   .then(function (response) {
                     console.log(response);
+                    console.log(JSON.parse(response.data.restaurantList[0]));
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -129,13 +136,11 @@ export default class CreateGroup extends React.Component {
                     margin: 75,
                     color: "white",
                   }}
-                  // variant="contained"
                   variant="secondary"
                   size="medium"
-                  // onClick={history.push("/joingroup");}
                   onClick={(event) => {
-                    this.handleSubmit(event);
-                    history.push("/joingroup");
+                    //this.handleSubmit(event);
+                    history.push("/joingroup", { groupData: this.state });
                   }}
                 >
                   Create Group

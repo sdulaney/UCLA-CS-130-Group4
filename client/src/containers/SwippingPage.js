@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardDisplay from "../components/Card";
 import "../styles/pageStyle.css";
 import "../restaurantsData";
 import resturants from "../restaurantsData";
 import TinderCard from "react-tinder-card";
 
-const SwippingPage = () => {
+const SwippingPage = ({ props }) => {
   const onSwipe = (direction) => {
     console.log("You swiped: " + direction);
     // If direction==="right" -> like restaurant else dislike
