@@ -94,12 +94,6 @@ const SwippingPage = (props) => {
   // }, []);
   const onCardLeftScreen = (myIdentifier) => {
     console.log(myIdentifier + " left the screen");
-    restaurantId === ""
-      ? null
-      : history.push("/", {
-          restId: restaurantId,
-          restaurants: yelp_restaurants,
-        });
   };
   return (
     <div>
