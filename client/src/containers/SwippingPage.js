@@ -20,7 +20,7 @@ const SwippingPage = (props) => {
           `http://localhost:3000/join/${urlInfo.groupId}/${urlInfo.userName}`
         )
         .then((response) => {
-          // console.log(response.data.restaurantList[0]);
+          console.log(JSON.parse(response.data.restaurantList[0]));
           setUserId(response.data.userid);
           const parseRest = JSON.parse(response.data.restaurantList[0]);
           setRestaurants(parseRest.businesses);
@@ -84,7 +84,7 @@ const SwippingPage = (props) => {
     }
     const interval = setInterval(() => {
       findMatch();
-    }, 1000);
+    }, 100000);
     return () => clearInterval(interval);
   }, [urlInfo.groupId, restaurantId, yelp_restaurants]);
 
@@ -123,15 +123,21 @@ const SwippingPage = (props) => {
                     <CardDisplay
                       imageUrl={e.image_url}
                       isMatched={false}
+                      rating={e.rating}
                       resturantName={e.name}
-                      Distance={e.distance}
+                      Distance={Math.round(e.distance * 0.000621371)}
+                      price={e.price}
                     />
                   ) : (
                     <CardDisplay
                       imageUrl={restaurantId.image_url}
+                      rating={restaurantId.rating}
                       isMatched={true}
                       resturantName={restaurantId.name}
-                      Distance={restaurantId.distance}
+                      Distance={Math.round(restaurantId.distance * 0.000621371)}
+                      address={restaurantId.location}
+                      phone={restaurantId.phone}
+                      price={restaurantId.price}
                     />
                   )}
                 </TinderCard>

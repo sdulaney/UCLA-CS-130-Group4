@@ -63,33 +63,8 @@ export default class CreateGroup extends React.Component {
       <div>
         <div className="pageContainer">
           <div className="elementsContainer">
-            <Button
-              // onClick={() => handleSubmit}
-              onClick={() => {
-                axios
-                  .post(
-                    "http://localhost:3000/join/4d7705dd-380d-41ea-a47d-f7aea0d3b3a4/gamal"
-                  )
-                  .then(function (response) {
-                    console.log(response);
-                    console.log(JSON.parse(response.data.restaurantList[0]));
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-              }}
-            >
-              JOIN
-            </Button>
             <h1 className="headers"> Create Event</h1>
-            <InputField
-              placeholder="Username"
-              fieldName={"Your Name"}
-              fieldValue={this.state.name}
-              HandleChange={(event, type) => {
-                this.handleChange(event, "name");
-              }}
-            />
+
             <InputField
               fieldName={"Street Address"}
               fieldValue={this.state.address}
