@@ -4,12 +4,14 @@ import "../styles/pageStyle.css";
 import "../restaurantsData";
 import TinderCard from "react-tinder-card";
 import axios from "axios";
+import { Route } from "react-router-dom";
+
 const SwippingPage = (props) => {
   const urlInfo = props.location.state.URL;
   if (urlInfo.userName === "") urlInfo.userName = "john";
   const [yelp_restaurants, setRestaurants] = useState([]);
   const [userId, setUserId] = useState();
-  const [restaurantId, setRestaurantId] = useState();
+  const [restaurantId, setRestaurantId] = useState("");
   useEffect(() => {
     try {
       axios
@@ -29,16 +31,16 @@ const SwippingPage = (props) => {
       console.log(err);
     }
   }, [urlInfo.groupId, urlInfo.userName]);
-  const findMatch = () => {
-    axios
-      .get(`/match/${urlInfo.groupId}`)
-      .then((response) => {
-        console.log("RESPONSE: ", response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // async function findMatch() {
+  //   await axios
+  //     .get(`/match/${urlInfo.groupId}`)
+  //     .then((response) => {
+  //       console.log("RESPONSE: ", response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
   const onSwipe = (direction, restId) => {
     //console.log("You swiped: " + direction);
     // console.log("Rest ID " + restId);
@@ -61,11 +63,43 @@ const SwippingPage = (props) => {
         console.log(err);
       }
     }
-    findMatch();
+    // findMatch();
   };
+  useEffect(() => {
+    async function findMatch() {
+      await axios
+        .get(`/match/${urlInfo.groupId}`)
+        .then((response) => {
+          console.log("RESPONSE: ", response);
+          if (response.data !== "") {
+            setRestaurantId(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const interval = setInterval(() => {
+      findMatch();
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [urlInfo.groupId, restaurantId]);
 
+  // useEffect(() => {
+  //   findMatch();
+  //   const interval = setInterval(() => {
+  //     // findMatch();
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // }, []);
   const onCardLeftScreen = (myIdentifier) => {
     console.log(myIdentifier + " left the screen");
+    restaurantId === ""
+      ? null
+      : history.push("/", {
+          restId: restaurantId,
+          restaurants: yelp_restaurants,
+        });
   };
   return (
     <div>
@@ -74,20 +108,51 @@ const SwippingPage = (props) => {
           {yelp_restaurants.map((e, i) => (
             <div>
               <div key={i}>
-                <TinderCard
-                  onSwipe={(direction, id) => onSwipe(direction, (id = e.id))}
-                  onCardLeftScreen={() => onCardLeftScreen("fooBar")}
-                  flickOnSwipe={true}
-                  preventSwipe={["up", "down"]}
+                <Route
+                  render={({ history }) => (
+                    <TinderCard
+                      onSwipe={(direction, id) =>
+                        onSwipe(direction, (id = e.id))
+                      }
+                      onCardLeftScreen={() => onCardLeftScreen("fooBar")}
+                      // onCardLeftScreen={
+                      //   restaurantId === ""
+                      //     ? null
+                      //     : history.push("/", {
+                      //         restId: restaurantId,
+                      //         restaurants: yelp_restaurants,
+                      //       })
+                      // }
+                      flickOnSwipe={true}
+                      preventSwipe={["up", "down"]}
+                    >
+                      <CardDisplay
+                        imageUrl={e.image_url}
+                        isMatched={false}
+                        resturantName={e.name}
+                        Distance={e.distance}
+                      />
+                    </TinderCard>
+                  )}
+                />
+                <button
+                // onClick={async () => {
+                //   try {
+                //     await axios
+                //       .get(`/match/${urlInfo.groupId}`)
+                //       .then((response) => {
+                //         console.log("RESPONSE: ", response);
+                //       })
+                //       .catch((error) => {
+                //         console.log(error);
+                //       });
+                //   } catch (e) {
+                //     alert(e);
+                //   }
+                // }}
                 >
-                  <CardDisplay
-                    imageUrl={e.image_url}
-                    isMatched={false}
-                    resturantName={e.name}
-                    Distance={e.distance}
-                  />
-                </TinderCard>
-                <h2>{() => findMatch()}</h2>
+                  TEST
+                </button>
               </div>
             </div>
           ))}
