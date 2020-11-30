@@ -12,6 +12,7 @@ const SwippingPage = (props) => {
   const [yelp_restaurants, setRestaurants] = useState([]);
   const [userId, setUserId] = useState();
   const [restaurantId, setRestaurantId] = useState("");
+
   useEffect(() => {
     try {
       axios
@@ -72,7 +73,9 @@ const SwippingPage = (props) => {
         .then((response) => {
           console.log("RESPONSE: ", response);
           if (response.data !== "") {
-            setRestaurantId(response.data);
+            setRestaurantId(
+              yelp_restaurants.find((obj) => obj.id === response.data)
+            );
           }
         })
         .catch((error) => {
@@ -81,9 +84,9 @@ const SwippingPage = (props) => {
     }
     const interval = setInterval(() => {
       findMatch();
-    }, 10000);
+    }, 1000);
     return () => clearInterval(interval);
-  }, [urlInfo.groupId, restaurantId]);
+  }, [urlInfo.groupId, restaurantId, yelp_restaurants]);
 
   // useEffect(() => {
   //   findMatch();
@@ -102,51 +105,36 @@ const SwippingPage = (props) => {
           {yelp_restaurants.map((e, i) => (
             <div>
               <div key={i}>
-                <Route
-                  render={({ history }) => (
-                    <TinderCard
-                      onSwipe={(direction, id) =>
-                        onSwipe(direction, (id = e.id))
-                      }
-                      onCardLeftScreen={() => onCardLeftScreen("fooBar")}
-                      // onCardLeftScreen={
-                      //   restaurantId === ""
-                      //     ? null
-                      //     : history.push("/", {
-                      //         restId: restaurantId,
-                      //         restaurants: yelp_restaurants,
-                      //       })
-                      // }
-                      flickOnSwipe={true}
-                      preventSwipe={["up", "down"]}
-                    >
-                      <CardDisplay
-                        imageUrl={e.image_url}
-                        isMatched={false}
-                        resturantName={e.name}
-                        Distance={e.distance}
-                      />
-                    </TinderCard>
-                  )}
-                />
-                <button
-                // onClick={async () => {
-                //   try {
-                //     await axios
-                //       .get(`/match/${urlInfo.groupId}`)
-                //       .then((response) => {
-                //         console.log("RESPONSE: ", response);
-                //       })
-                //       .catch((error) => {
-                //         console.log(error);
-                //       });
-                //   } catch (e) {
-                //     alert(e);
-                //   }
-                // }}
+                <TinderCard
+                  onSwipe={(direction, id) => onSwipe(direction, (id = e.id))}
+                  onCardLeftScreen={() => onCardLeftScreen("fooBar")}
+                  // onCardLeftScreen={
+                  //   restaurantId === ""
+                  //     ? null
+                  //     : history.push("/", {
+                  //         restId: restaurantId,
+                  //         restaurants: yelp_restaurants,
+                  //       })
+                  // }
+                  flickOnSwipe={true}
+                  preventSwipe={["up", "down"]}
                 >
-                  TEST
-                </button>
+                  {restaurantId === "" ? (
+                    <CardDisplay
+                      imageUrl={e.image_url}
+                      isMatched={false}
+                      resturantName={e.name}
+                      Distance={e.distance}
+                    />
+                  ) : (
+                    <CardDisplay
+                      imageUrl={restaurantId.image_url}
+                      isMatched={true}
+                      resturantName={restaurantId.name}
+                      Distance={restaurantId.distance}
+                    />
+                  )}
+                </TinderCard>
               </div>
             </div>
           ))}
