@@ -29,10 +29,12 @@ async function checkForMatch(userId, groupId, restaurantId) {
         await transactClient.watch(groupId);
         const memStr = await transactClient.hget(groupId, 'members');
         const memObj = JSON.parse(memStr)
+        //console.log(`users are ${memObj}`)
         await transactClient.watch(memObj);
         for (let i =0; i < memObj.length; i++){
             const userRestStr = await transactClient.hget(memObj[i], 'likedRestaurantId');
             const userRestObj = JSON.parse(userRestStr)
+            //console.log(`restaurantId liked are: ${userRestObj}`)
             for (let j =0; j<userRestObj.length; j++) {
                 if (restaurantId == userRestObj[j]) {
                     count += 1;

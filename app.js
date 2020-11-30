@@ -72,6 +72,7 @@ app.get('/getme', async (req, res) => {
 	await groups.insertNewMember('123','12345')
 	let match = await users.likeRestaurant('12345','in-n-out')
 	console.log(`this group has a matched restaurant: ${match}`)
+	await users.likeRestaurant('12345', 'mcdonald')
 	console.log(`Matched result is ${await groups.getMatch('123')}`)
 	//=============
 	await users.insertNewUser('123', '123456', 'hank2')

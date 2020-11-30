@@ -23,12 +23,13 @@ router.post('/:groupId/:userId/:restaurantId', async (req, res) => {
 	const userId = req.params.userId;
 	const restaurantId = req.params.restaurantId;
 
-	if (users.userExists(userId) === 0) {
+	const existBool = await users.userExists(userId);
+	if (existBool == 0) {
 		console.log("user doesn't exist:", userId);
 		res.status(404).send();
 	}
 
-	if (users.userExists(userId) === 1) {
+	if (existBool == 1) {
 		await users.likeRestaurant(userId, restaurantId);	
 	}
 
@@ -38,6 +39,7 @@ router.post('/:groupId/:userId/:restaurantId', async (req, res) => {
 	console.log("this user's liked restaurants: ");
 	//tests if the restaurant is added to user's likedRestaurants
 	console.log(await users.getLikedRestaurant(userId));
+	console.log("match of the group is: ", await groups.getMatch(groupId))
 });
 
 module.exports = router;
