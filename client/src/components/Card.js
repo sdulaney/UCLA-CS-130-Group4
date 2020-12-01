@@ -15,6 +15,12 @@
 
 import React from "react";
 import "../styles/card.css";
+
+// import { makeStyles } from '@material-ui/core/styles';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from "@material-ui/core/Box";
+// import StarRating from "./StarRating";
+
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -56,7 +62,29 @@ export default class CardDisplay extends React.Component {
           <Card.Body waves>
             <h2 className="resturantNameStyle">{this.props.resturantName}</h2>
             <Card.Text>
-              <h6> Implement Rating Here </h6>
+              <h6> 
+
+
+                {/* <Rating
+                  name="hover-feedback"
+                  value={value}
+                  precision={0.5}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                  onChangeActive={(event, newHover) => {
+                    setHover(newHover);
+                  }}
+                />
+                {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>} */}
+                {/* <div className="App">
+                  <StarRating></StarRating>
+                </div> */}
+
+
+
+                Implement Rating Here </h6>
+              {/* drumstick-bite-solid.svg */}
               <h6 className="distanceTextStyle"> {this.props.Distance} </h6>
             </Card.Text>
             <div className="buttonsContainer">

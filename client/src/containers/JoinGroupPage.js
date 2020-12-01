@@ -19,8 +19,10 @@ const JoinGroupPage = () => {
               margin: 75,
               color: "white"
             }}
-            variant="secondary"
+            // variant="contained"
+            variant="outline-light"
             size="medium"
+            onSubmit={() => { }}
           >
             Start Swipping
           </Button>

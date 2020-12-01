@@ -27,7 +27,7 @@ const CreateGroup = () => {
                 color: "white"
               }}
               // variant="contained"
-              variant="secondary"
+              variant="outline-light"
               size="medium"
               onSubmit={() => { }}
             >

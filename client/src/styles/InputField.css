@@ -55,9 +55,10 @@
 .ButtonStyle{
   position: center;
   background: rgb(180,58,119);
+ 
   background: linear-gradient(0deg,
- rgba(180,58,119,1) 0%,
- rgba(228,3,3,1) 0%,
+ rgb(180,58,119,1) 0%,
+ rgb(242,111,111,0.7973564425770308) 0%,
  rgba(252,176,69,1) 100%);
  border: none;
  display: inline-block;
