@@ -29,11 +29,13 @@ export default class DropdownField extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <select
             className={"inputfield"}
-            value={this.state.field}
-            onChange={this.handleChange}
+            value={this.props.fieldValue}
+            onChange={this.props.HandleChange}
           >
-            {this.props.inputList.map((x) => (
-              <option value={x}>{x}</option>
+            {this.props.inputList.map((x, i) => (
+              <option key={i} value={x}>
+                {x}
+              </option>
             ))}
           </select>
         </form>

@@ -24,14 +24,16 @@ export default class InputField extends React.Component {
   }
   render() {
     return (
-      <div data-placeholder='data-placeholder'>
+      <div data-placeholder="data-placeholder">
         <h3 className="input">{this.props.fieldName} </h3>
         <form onSubmit={this.handleSubmit}>
           <input
             className="inputfield"
             type="text"
-            value={this.state.field}
-            onChange={this.handleChange}
+            // value={this.state.field}
+            // onChange={this.handleChange}
+            value={this.props.fieldValue}
+            onChange={this.props.HandleChange}
           />
         </form>
       </div>

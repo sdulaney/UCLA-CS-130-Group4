@@ -7,15 +7,14 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDrumstickBite } from '@fortawesome/free-solid-svg-icons'
+import HomePage from "./containers/HomePage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDrumstickBite } from "@fortawesome/free-solid-svg-icons";
 
 // import {
 //   faDrumstickBite
 
 // } from "@fortawesome/free-solid-svg-icons";
-
 
 const App = () => {
   // render()
@@ -26,12 +25,9 @@ const App = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Navbar.Brand href="/">
             <FontAwesomeIcon className="iconStyleLogo" icon={faDrumstickBite} />
-              Chicken Tinder
+            Chicken Tinder
           </Navbar.Brand>
         </Navbar.Collapse>
-
-
-
 
         <div style={{ marginLeft: 50 }}>
           <Nav className="mr-auto">
@@ -41,15 +37,12 @@ const App = () => {
               href="/creategroup"
             >
               <Button variant="outline-light">Create</Button>
-
             </Nav.Link>
             <Nav.Link
               style={{ fontSize: 20, color: "white" }}
               href="/joingroup"
             >
-
               <Button variant="outline-light">Join</Button>
-
             </Nav.Link>
           </Nav>
         </div>
@@ -57,7 +50,7 @@ const App = () => {
       <div>
         <BrowserRouter>
           <div>
-            <Route path="/" exact component={CreateGroup} />
+            <Route path="/" exact component={HomePage} />
             <Route path="/creategroup" component={CreateGroup} />
             <Route path="/joingroup" component={JoinGroupPage} />
             <Route path="/swipe" component={SwippingPage} />

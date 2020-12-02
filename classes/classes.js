@@ -47,15 +47,6 @@ class Users {
         const groupId = await this.getGroupId(userId)
        return await checkForMatch(userId,groupId,resId)
     }
-    async removeUser(userId) {
-        await this.client.del(userId)
-    }
-    async getLikedRestaurant(userId){
-        return await this.client.hget(userId, 'likedRestaurantId');
-    }
-    async getGroupId(userId){
-        return await this.client.get(userId,'groupId')
-    }
     //@param: userId : string
     //@return: void
     async removeUser(userId) {
@@ -71,6 +62,13 @@ class Users {
    async getGroupId(userId){
         return await this.client.hget(userId,'groupId')
     }
+
+    //@param: userId : string
+    //@param: groupId : string
+    //return: 1 if user exists, 0 if not
+    async userExists(userId) {
+        return this.client.exists(userId)
+    }
  }
 
 
@@ -81,10 +79,8 @@ class Users {
     //@param: groupId : string
     //@return: void
     async insertNewGroup(groupId) {
-        console.log("break point")
         const data = JSON.stringify([])
         await this.client.hset(groupId, 'members', data, 'fetchedRestaurants', data)
-        console.log("break point2")
     }
     //@param: groupId : string, userId : string
     //@return: void
@@ -99,6 +95,7 @@ class Users {
             memStr = JSON.stringify(memObj)
             await transactClient.multi()
                     .hset(groupId, 'members', memStr)
+                    .hdel(groupId, 'restaurantId')
                     .exec((err, result) => {
                         if (result) {
                             retry = false
@@ -132,9 +129,6 @@ class Users {
     }
     //this function does not append to existing restaurant id
     //it replaces the exisiting restaurant id of the group
-    async setFetchedRestaurantLists(groupId, restIdList) {
-        await this.client.hset(groupId, 'fetchedRestaurants', JSON.stringify(restIdList))
-    }
     //@param: groupId : string, restIdList : string[] // list of restaurant id
     //@return: void
     async setFetchedRestaurantLists(groupId, restIdList) {
@@ -146,22 +140,16 @@ class Users {
         const tempStr = await this.client.hget(groupId, 'fetchedRestaurants')
         return JSON.parse(tempStr)
     }
-    async removeGroup(groupId) {
-        await this.client.hdel(groupId)
-    }
     //@param: groupId : string
     //@return: void
     async removeGroup(groupId) {
-        await this.client.hdel(groupId)
+        await this.client.del(groupId)
     }
     //@param: groupId : string
     //@return: list_userId : string[]
     async getMembers(groupId) {
         const tempStr = await this.client.hget(groupId, 'members')
         return JSON.parse(tempStr)
-    }
-    async getMatch(groupId){
-        return await this.client.hget(groupId, 'restaurantId')
     }
     //@param: groupId : string
     //@return: matched_restaurantId : string
@@ -182,7 +170,7 @@ class Users {
      //@param: groupId : string, restList : Object[] // list of restaurant object
      //@return: void
      async insertListRestaurantObj(groupId, restList) {
-         const tempStr = JSON.stringify(restlist) 
+         const tempStr = JSON.stringify(restList) 
          await this.client.hset('restaurantObj', groupId, tempStr)
      }
      //@param: groupId : string

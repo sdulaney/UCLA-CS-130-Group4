@@ -5,15 +5,14 @@
 /* --------------------------------------- */
 
 .container {
-  justify-content: center
-  
+  justify-content: center;
 }
 
 .cardContainer {
   width: 500px;
   height: 700px;
   margin: auto;
-  border:solid #ffffff;
+  border: solid #ffffff;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,20 +29,17 @@
   left: 50%;
   border-radius: 2.5%;
   /* margin-right: -50%; */
-  transform: translate(-50%, -50%)
-
+  transform: translate(-50%, -50%);
 
   /* display: flex; */
   /* justify-content: center */
-  
-
 }
 .card_image {
   width: 500px;
   height: 430px;
   box-shadow: 0 0 10px;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
 .buttonsContainer {
@@ -52,7 +48,6 @@
 }
 
 .buttonChildContainer {
-  padding: 1.2em 1em 0;
   width: 50%;
   float: left;
 }
@@ -64,8 +59,8 @@
 /* --------------------------------------- */
 .buttonStyle {
   color: red;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   -moz-border-radius: 100px;
   -webkit-border-radius: 100px;
 }
@@ -104,7 +99,7 @@
   justify-content: space-between;
 }
 
-.color-nav{
+.color-nav {
   /* background-color: rgb(255, 255, 255); */
   /* opacity: 0.80; */
   height: 3.4rem;
@@ -112,10 +107,10 @@
   /* transition: all 0.3s ease-in-out; */
 }
 
-.iconStyleLogo{
+.iconStyleLogo {
   color: white;
   max-height: 300px;
-  max-width: 100%; 
+  max-width: 100%;
   font-size: 45px;
   font-weight: bold;
   transition: 0.4s;
