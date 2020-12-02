@@ -4,7 +4,6 @@ import "../styles/pageStyle.css";
 import "../restaurantsData";
 import TinderCard from "react-tinder-card";
 import axios from "axios";
-import { Route } from "react-router-dom";
 
 const SwippingPage = (props) => {
   // const [urlInfo, setUrlInfo] = useState();

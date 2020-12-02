@@ -15,6 +15,12 @@
 
 import React from "react";
 import "../styles/card.css";
+
+// import { makeStyles } from '@material-ui/core/styles';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from "@material-ui/core/Box";
+// import StarRating from "./StarRating";
+
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "@material-ui/lab/Rating";

@@ -4,8 +4,7 @@ import DropdownField from "../components/DropdownField";
 import { us_states } from "../config";
 import "../styles/pageStyle.css";
 import Button from "react-bootstrap/Button";
-import { Route, BrowserRouter as Router } from "react-router-dom";
-import axios from "axios";
+import { Route } from "react-router-dom";
 
 export default class CreateGroup extends React.Component {
   state = {
