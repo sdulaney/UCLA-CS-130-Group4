@@ -47,15 +47,6 @@ class Users {
         const groupId = await this.getGroupId(userId)
        return await checkForMatch(userId,groupId,resId)
     }
-    async removeUser(userId) {
-        await this.client.del(userId)
-    }
-    async getLikedRestaurant(userId){
-        return await this.client.hget(userId, 'likedRestaurantId');
-    }
-    async getGroupId(userId){
-        return await this.client.get(userId,'groupId')
-    }
     //@param: userId : string
     //@return: void
     async removeUser(userId) {
@@ -70,6 +61,13 @@ class Users {
     //@return: groupId : string
    async getGroupId(userId){
         return await this.client.hget(userId,'groupId')
+    }
+
+    //@param: userId : string
+    //@param: groupId : string
+    //return: 1 if user exists, 0 if not
+    async userExists(userId) {
+        return this.client.exists(userId)
     }
  }
 
@@ -142,9 +140,6 @@ class Users {
         const tempStr = await this.client.hget(groupId, 'fetchedRestaurants')
         return JSON.parse(tempStr)
     }
-    async removeGroup(groupId) {
-        await this.client.hdel(groupId)
-    }
     //@param: groupId : string
     //@return: void
     async removeGroup(groupId) {
@@ -155,9 +150,6 @@ class Users {
     async getMembers(groupId) {
         const tempStr = await this.client.hget(groupId, 'members')
         return JSON.parse(tempStr)
-    }
-    async getMatch(groupId){
-        return await this.client.hget(groupId, 'restaurantId')
     }
     //@param: groupId : string
     //@return: matched_restaurantId : string
