@@ -19,12 +19,7 @@ import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "@material-ui/lab/Rating";
 
-import {
-  faHeart,
-  faTimes,
-  faDirections,
-  faPhoneAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDirections, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default class CardDisplay extends React.Component {
   constructor(props) {
@@ -92,7 +87,7 @@ export default class CardDisplay extends React.Component {
                       window.location.href = `http://google.com/maps/place/${this.props.address.address1.replace(
                         / /g,
                         "+"
-                      )}`;
+                      )},${this.props.address.city.replace(/ /g, "+")}`;
                     }}
                   >
                     <FontAwesomeIcon

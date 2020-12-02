@@ -84,7 +84,7 @@ const SwippingPage = (props) => {
     }
     const interval = setInterval(() => {
       findMatch();
-    }, 100000);
+    }, 1000);
     return () => clearInterval(interval);
   }, [urlInfo.groupId, restaurantId, yelp_restaurants]);
 
