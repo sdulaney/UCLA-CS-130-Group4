@@ -40,7 +40,7 @@ app.use('/join', usersRouter);
 app.use('/groups', groupRouter);
 app.use('/match', matchRouter);
 
-app.get('/getme', async (req, res) => {
+app.post('/getme', async (req, res) => {
 	//insert new user groupId: 123, userId: 1234, name : hank
 	await users.insertNewUser('123','1234','hank')
 	//create a new group. groupId : 123
