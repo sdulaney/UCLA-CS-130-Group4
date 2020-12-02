@@ -7,18 +7,30 @@ import axios from "axios";
 import { Route } from "react-router-dom";
 
 const SwippingPage = (props) => {
-  const urlInfo = props.location.state.URL;
-  if (urlInfo.userName === "") urlInfo.userName = "john";
+  // const [urlInfo, setUrlInfo] = useState();
+  //const [groupId, setGroupId] = useState();
+  //const [userName, setUserName] = useState("john");
   const [yelp_restaurants, setRestaurants] = useState([]);
   const [userId, setUserId] = useState();
   const [restaurantId, setRestaurantId] = useState("");
+  let groupId = "";
+  let userName = "";
+  try {
+    //  setUrlInfo(props.location.state.URL);
+    // if (urlInfo.userName === "") urlInfo.userName = "john";
+    //setGroupId(props.location.state.URL.groupId);
+    // setUserName(props.location.state.URL.userName);
+    groupId = props.location.state.URL.groupId;
+    userName = props.location.state.URL.userName;
+  } catch (er) {
+    //  console.log(er);
+  }
+  //if (urlInfo.userName === "") urlInfo.userName = "john";
 
   useEffect(() => {
     try {
       axios
-        .post(
-          `http://localhost:3000/join/${urlInfo.groupId}/${urlInfo.userName}`
-        )
+        .post(`http://localhost:3000/join/${groupId}/${userName}`)
         .then((response) => {
           console.log(JSON.parse(response.data.restaurantList[0]));
           setUserId(response.data.userid);
@@ -31,7 +43,7 @@ const SwippingPage = (props) => {
     } catch (err) {
       console.log(err);
     }
-  }, [urlInfo.groupId, urlInfo.userName]);
+  }, [groupId, userName]);
   // async function findMatch() {
   //   await axios
   //     .get(`/match/${urlInfo.groupId}`)
@@ -51,9 +63,7 @@ const SwippingPage = (props) => {
     if (direction === "right") {
       try {
         axios
-          .post(
-            `http://localhost:3000/swipe/${urlInfo.groupId}/${userId}/${restId}`
-          )
+          .post(`http://localhost:3000/swipe/${groupId}/${userId}/${restId}`)
           .then((response) => {
             console.log(response);
           })
@@ -69,7 +79,7 @@ const SwippingPage = (props) => {
   useEffect(() => {
     async function findMatch() {
       await axios
-        .get(`/match/${urlInfo.groupId}`)
+        .get(`/match/${groupId}`)
         .then((response) => {
           console.log("RESPONSE: ", response);
           if (response.data !== "") {
@@ -86,7 +96,7 @@ const SwippingPage = (props) => {
       findMatch();
     }, 1000);
     return () => clearInterval(interval);
-  }, [urlInfo.groupId, restaurantId, yelp_restaurants]);
+  }, [groupId, restaurantId, yelp_restaurants]);
 
   // useEffect(() => {
   //   findMatch();

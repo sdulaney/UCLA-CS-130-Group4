@@ -27,6 +27,7 @@ const HomePage = () => {
         </div>
         <div className="joinGroup">
           <h2>Join Existing Group</h2>
+
           <Link to="/joingroup">
             <Button className="ButtonStyle">Join</Button>
           </Link>
