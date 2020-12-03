@@ -15,24 +15,6 @@ export default class CreateGroup extends React.Component {
     radius: "",
     zipCode: "",
   };
-  // Fix unmounting components
-
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   axios
-  //     .post(`http://localhost:3000/groups/create`, {
-  //       address: this.state.address,
-  //       city: this.state.city,
-  //       state: this.state.stateName,
-  //       zipCode: this.state.zipCode,
-  //       radius: this.state.radius,
-  //     })
-  //     .then((res) => {
-  //       // console.log(res);
-  //       this.setState({ groupId: res.data });
-  //     });
-  // };
   handleChange = (event, type) => {
     switch (type) {
       case "address":

@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from "react";
 import CardDisplay from "../components/Card";
 import "../styles/pageStyle.css";
-import "../restaurantsData";
 import TinderCard from "react-tinder-card";
 import axios from "axios";
 
-const SwippingPage = (props) => {
-  // const [urlInfo, setUrlInfo] = useState();
-  //const [groupId, setGroupId] = useState();
-  //const [userName, setUserName] = useState("john");
+const SwipingPage = (props) => {
   const [yelp_restaurants, setRestaurants] = useState([]);
   const [userId, setUserId] = useState();
   const [restaurantId, setRestaurantId] = useState("");
   let groupId = "";
   let userName = "";
   try {
-    //  setUrlInfo(props.location.state.URL);
-    // if (urlInfo.userName === "") urlInfo.userName = "john";
-    //setGroupId(props.location.state.URL.groupId);
-    // setUserName(props.location.state.URL.userName);
     groupId = props.location.state.URL.groupId;
     userName = props.location.state.URL.userName;
   } catch (er) {
     //  console.log(er);
   }
-  //if (urlInfo.userName === "") urlInfo.userName = "john";
 
   useEffect(() => {
     try {
@@ -43,22 +34,8 @@ const SwippingPage = (props) => {
       console.log(err);
     }
   }, [groupId, userName]);
-  // async function findMatch() {
-  //   await axios
-  //     .get(`/match/${urlInfo.groupId}`)
-  //     .then((response) => {
-  //       console.log("RESPONSE: ", response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+
   const onSwipe = (direction, restId) => {
-    //console.log("You swiped: " + direction);
-    // console.log("Rest ID " + restId);
-    //console.log("User ID" + userId);
-    //console.log("Group ID" + urlInfo.groupId);
-    // If direction==="right" -> like restaurant else dislike
     if (direction === "right") {
       try {
         axios
@@ -73,7 +50,6 @@ const SwippingPage = (props) => {
         console.log(err);
       }
     }
-    // findMatch();
   };
   useEffect(() => {
     async function findMatch() {
@@ -97,13 +73,6 @@ const SwippingPage = (props) => {
     return () => clearInterval(interval);
   }, [groupId, restaurantId, yelp_restaurants]);
 
-  // useEffect(() => {
-  //   findMatch();
-  //   const interval = setInterval(() => {
-  //     // findMatch();
-  //   }, 10000);
-  //   return () => clearInterval(interval);
-  // }, []);
   const onCardLeftScreen = (myIdentifier) => {
     console.log(myIdentifier + " left the screen");
   };
@@ -117,14 +86,6 @@ const SwippingPage = (props) => {
                 <TinderCard
                   onSwipe={(direction, id) => onSwipe(direction, (id = e.id))}
                   onCardLeftScreen={() => onCardLeftScreen("fooBar")}
-                  // onCardLeftScreen={
-                  //   restaurantId === ""
-                  //     ? null
-                  //     : history.push("/", {
-                  //         restId: restaurantId,
-                  //         restaurants: yelp_restaurants,
-                  //       })
-                  // }
                   flickOnSwipe={true}
                   preventSwipe={["up", "down"]}
                 >
@@ -158,7 +119,4 @@ const SwippingPage = (props) => {
     </div>
   );
 };
-
-export default SwippingPage;
-//Assume there are 10 restaurants
-// Use polling to find a match
+export default SwipingPage;

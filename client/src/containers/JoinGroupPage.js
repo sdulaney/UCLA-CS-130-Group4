@@ -60,7 +60,6 @@ export default class JoinGroupPage extends React.Component {
               this.handleChange(event, "url");
             }}
           />
-          {/* Parse groupId from GroupURL input field,then add it to the path as swipe/{groupId} */}
           <Route
             render={({ history }) => (
               <Button
@@ -74,11 +73,10 @@ export default class JoinGroupPage extends React.Component {
                 variant="secondary"
                 size="medium"
                 onClick={(event) => {
-                  //this.handleSubmit(event);
                   history.push("/swipe", { URL: this.state });
                 }}
               >
-                Start Swipping
+                Start Swiping
               </Button>
             )}
           />

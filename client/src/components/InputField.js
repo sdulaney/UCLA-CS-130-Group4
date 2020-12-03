@@ -30,8 +30,6 @@ export default class InputField extends React.Component {
           <input
             className="inputfield"
             type="text"
-            // value={this.state.field}
-            // onChange={this.handleChange}
             value={this.props.fieldValue}
             onChange={this.props.HandleChange}
           />

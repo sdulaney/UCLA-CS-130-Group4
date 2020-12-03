@@ -15,12 +15,6 @@
 
 import React from "react";
 import "../styles/card.css";
-
-// import { makeStyles } from '@material-ui/core/styles';
-// import Rating from '@material-ui/lab/Rating';
-// import Box from "@material-ui/core/Box";
-// import StarRating from "./StarRating";
-
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "@material-ui/lab/Rating";
@@ -38,7 +32,6 @@ export default class CardDisplay extends React.Component {
     this.setState({ field: event.target.value });
   }
   handleSubmit(event) {
-    //Post to API code goes here
     event.preventDefault();
   }
   render() {
@@ -78,12 +71,6 @@ export default class CardDisplay extends React.Component {
                     <FontAwesomeIcon className="iconStyle" icon={faPhoneAlt} />
                   </button>
                 ) : null}
-                {/* <button className="buttonStyle">
-                  {this.props.isMatched ? (
-                    <FontAwesomeIcon className="iconStyle" icon={faPhoneAlt} />
-                  ) : // <FontAwesomeIcon className="iconStyle" icon={faTimes} />
-                  null}
-                  </button>*/}
               </div>
               <div className="buttonChildContainer">
                 {this.props.isMatched ? (
@@ -102,16 +89,6 @@ export default class CardDisplay extends React.Component {
                     />
                   </button>
                 ) : null}
-                {/* <button className="buttonStyle">
-                  {this.props.isMatched ? (
-                    <FontAwesomeIcon
-                      className="iconStyle"
-                      icon={faDirections}
-                    />
-                  ) : (
-                    <FontAwesomeIcon className="iconStyle" icon={faHeart} />
-                  )}
-                  </button>*/}
               </div>
             </div>
           </Card.Body>

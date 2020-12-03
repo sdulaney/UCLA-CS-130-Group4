@@ -19,7 +19,6 @@ export default class DropdownField extends React.Component {
     this.setState({ field: event.target.value });
   }
   handleSubmit(event) {
-    //Post to API code goes here
     event.preventDefault();
   }
   render() {
