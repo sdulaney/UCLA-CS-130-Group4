@@ -3,13 +3,9 @@ A more creative & efficient way to find restaurants when eating in groups.
 ### Project Directory Structure
 root
 ├── bin
-
 │   ├── www
-
 │   ├── classes.js
-
 │   └── matcher.js
-
 ├── client
 
 │   ├── public
