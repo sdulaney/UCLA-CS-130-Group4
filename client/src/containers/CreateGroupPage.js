@@ -5,7 +5,6 @@ import { us_states } from "../config";
 import "../styles/pageStyle.css";
 import Button from "react-bootstrap/Button";
 import { Route } from "react-router-dom";
-import axios from "axios";
 
 export default class CreateGroup extends React.Component {
   state = {
@@ -46,7 +45,12 @@ export default class CreateGroup extends React.Component {
         this.setState({ zipCode: event.target.value });
         break;
       case "radius":
-        this.setState({ radius: event.target.value });
+        this.setState({
+          radius:
+            event.target.value > 20
+              ? "max radius is 20 miles"
+              : event.target.value,
+        });
         break;
       case "stateName":
         this.setState({ stateName: event.target.value });
@@ -63,33 +67,8 @@ export default class CreateGroup extends React.Component {
       <div>
         <div className="pageContainer">
           <div className="elementsContainer">
-            <Button
-              // onClick={() => handleSubmit}
-              onClick={() => {
-                axios
-                  .post(
-                    "http://localhost:3000/join/4d7705dd-380d-41ea-a47d-f7aea0d3b3a4/gamal"
-                  )
-                  .then(function (response) {
-                    console.log(response);
-                    console.log(JSON.parse(response.data.restaurantList[0]));
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-              }}
-            >
-              JOIN
-            </Button>
             <h1 className="headers"> Create Event</h1>
-            <InputField
-              placeholder="Username"
-              fieldName={"Your Name"}
-              fieldValue={this.state.name}
-              HandleChange={(event, type) => {
-                this.handleChange(event, "name");
-              }}
-            />
+
             <InputField
               fieldName={"Street Address"}
               fieldValue={this.state.address}
@@ -120,12 +99,13 @@ export default class CreateGroup extends React.Component {
               }}
             />
             <InputField
-              fieldName={"Max Radius"}
+              fieldName={"Radius"}
               fieldValue={this.state.radius}
               HandleChange={(event, type) => {
                 this.handleChange(event, "radius");
               }}
             />
+
             <Route
               render={({ history }) => (
                 <Button

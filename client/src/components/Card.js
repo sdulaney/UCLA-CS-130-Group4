@@ -15,14 +15,17 @@
 
 import React from "react";
 import "../styles/card.css";
+
+// import { makeStyles } from '@material-ui/core/styles';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from "@material-ui/core/Box";
+// import StarRating from "./StarRating";
+
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faTimes,
-  faDirections,
-  faPhoneAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import Rating from "@material-ui/lab/Rating";
+
+import { faDirections, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default class CardDisplay extends React.Component {
   constructor(props) {
@@ -43,10 +46,8 @@ export default class CardDisplay extends React.Component {
       <div className="container">
         <Card bsPrefix="cardContainer">
           {this.props.isMatched ? (
-            <h3 className="titleText"> Tonight's Dinner</h3>
-          ) : (
             <h3 className="titleText"> Tonight's Matched Dinner</h3>
-          )}
+          ) : null}
 
           <img
             src={this.props.imageUrl}
@@ -56,21 +57,52 @@ export default class CardDisplay extends React.Component {
           <Card.Body waves>
             <h2 className="resturantNameStyle">{this.props.resturantName}</h2>
             <Card.Text>
-              <h6> Implement Rating Here </h6>
-              <h6 className="distanceTextStyle"> {this.props.Distance} </h6>
+              <Rating
+                name="half-rating-read"
+                defaultValue={this.props.rating}
+                precision={0.5}
+                readOnly
+              />
+              <h6>{`${this.props.price}`}</h6>
+              <h6 className="distanceTextStyle">
+                {" "}
+                {this.props.Distance === 0
+                  ? "less than 1 mile"
+                  : `${this.props.Distance} miles`}
+              </h6>
             </Card.Text>
             <div className="buttonsContainer">
               <div className="buttonChildContainer">
-                <button className="buttonStyle">
+                {this.props.isMatched ? (
+                  <button className="buttonStyle" onClick={this.props.phone}>
+                    <FontAwesomeIcon className="iconStyle" icon={faPhoneAlt} />
+                  </button>
+                ) : null}
+                {/* <button className="buttonStyle">
                   {this.props.isMatched ? (
                     <FontAwesomeIcon className="iconStyle" icon={faPhoneAlt} />
-                  ) : (
-                    <FontAwesomeIcon className="iconStyle" icon={faTimes} />
-                  )}
-                </button>
+                  ) : // <FontAwesomeIcon className="iconStyle" icon={faTimes} />
+                  null}
+                  </button>*/}
               </div>
               <div className="buttonChildContainer">
-                <button className="buttonStyle">
+                {this.props.isMatched ? (
+                  <button
+                    className="buttonStyle"
+                    onClick={() => {
+                      window.location.href = `http://google.com/maps/place/${this.props.address.address1.replace(
+                        / /g,
+                        "+"
+                      )},${this.props.address.city.replace(/ /g, "+")}`;
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      className="iconStyle"
+                      icon={faDirections}
+                    />
+                  </button>
+                ) : null}
+                {/* <button className="buttonStyle">
                   {this.props.isMatched ? (
                     <FontAwesomeIcon
                       className="iconStyle"
@@ -79,7 +111,7 @@ export default class CardDisplay extends React.Component {
                   ) : (
                     <FontAwesomeIcon className="iconStyle" icon={faHeart} />
                   )}
-                </button>
+                  </button>*/}
               </div>
             </div>
           </Card.Body>
@@ -88,9 +120,3 @@ export default class CardDisplay extends React.Component {
     );
   }
 }
-
-
-
-
-
-
