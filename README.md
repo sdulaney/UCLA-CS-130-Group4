@@ -10,6 +10,7 @@ root
 
 │   ├── public
 
+
 │   │   ├── favicon.ico
 
 │   │   ├── index.html
