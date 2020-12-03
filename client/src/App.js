@@ -1,7 +1,7 @@
 import React from "react";
 import CreateGroup from "./containers/CreateGroupPage";
 import JoinGroupPage from "./containers/JoinGroupPage";
-import SwipingPage from "./containers/SwippingPage";
+import SwipingPage from "./containers/SwipingPage";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
