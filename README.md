@@ -1,58 +1,7 @@
 # UCLA-CS-130-Group4 -- "Chicken Tinder"
 A more creative & efficient way to find restaurants when eating in groups.
 ### Project Directory Structure
-root
-├── bin 
-│   ├── www 
-│   ├── classes.js 
-│   └── matcher.js 
-├── client 
-│   ├── public 
-│   │   ├── favicon.ico 
-│   │   ├── index.html 
-│   │   ├── logo192.png 
-│   │   ├── logo512.png
-│   │   └── manifest.json
-│   └── src
-│       ├── __test__
-│       │   ├── CreateGroupPage.test.js
-│       │   ├── HomePage.test.js
-│       │   ├── JoinGroupPage.test.js
-│       │   └── SwipingPage.test.js
-│       ├── components
-│       │   ├── Card.js
-│       │   ├── DropdownField.js
-│       │   └── InputField.js
-│       ├── containers
-│       │   ├── CreateGroupPage.js
-│       │   ├── HomePage.js
-│       │   ├── JoinGroupPage.js
-│       │   └── SwipingPage.js
-│       ├── styles
-│       │   ├── card.css
-│       │   ├── homePage.css
-│       │   ├── InputField.css
-│       │   └── pageStyle.css
-│       ├── App.js
-│       ├── config.js
-│       └── index.js
-├── public
-│   └── stylesheets
-│       └── style.css
-├── routes
-│   ├── getMatch.js
-│   ├── groups.js
-│   ├── index.js
-│   ├── index.js
-│   ├── swipe.js
-│   └── users.js
-├── tests
-│   ├── backend.test.js
-│   └── sample.test.js
-├── app.js
-├── README.md
-└── yelp.js
-
+![Project_Directory_Structure](directory_structure.png)
 
 ### Backend Quickstart (from repo root directory)
 * `npm install`
