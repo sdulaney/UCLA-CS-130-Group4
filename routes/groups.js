@@ -32,6 +32,8 @@ router.post('/create', async(req, res, next) => {
         // Set fetchedRestaurants for new group in db
         await groups.setFetchedRestaurantLists(groupId, values);
     });
+    var list = await groups.getFetchedRestaurantLists(groupId);
+    console.log(list);
     res.status(200).send(groupId); 
 });
 

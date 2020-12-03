@@ -12,9 +12,9 @@ router.post('/:uid/:username', async (req,res) =>{
 	const groupid = req.params.uid;
 	const username = req.params.username;
 	const userid = uuid.v4();
-	console.log("in post "+userid);
-	groups.insertNewMember(groupid, userid);
-	users.insertNewUser(groupid,userid,username);
+	// console.log("in post "+userid);
+	await groups.insertNewMember(groupid, userid);
+	await users.insertNewUser(groupid,userid,username);
 	var list = await groups.getFetchedRestaurantLists(groupid);
 	res.status(200).json({"restaurantList":list, "userid":userid});
 
