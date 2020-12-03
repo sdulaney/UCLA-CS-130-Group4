@@ -1,4 +1,4 @@
-# UCLA-CS-130-Group4 -- "Chicken Tinder"
+# UCLA-CS-130-Group4 / "Chicken Tinder"
 A more creative & efficient way to find restaurants when eating in groups.
 ### Project Directory Structure
 ![Project_Directory_Structure](directory_structure.png)
