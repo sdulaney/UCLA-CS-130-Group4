@@ -1,6 +1,14 @@
-# UCLA-CS-130-Group4 / "Chicken Tinder"
+# Chicken Tinder
 
 A more creative & efficient way to find restaurants when eating in groups.
+
+<p float="left">
+    <img src="https://img.shields.io/static/v1?label=Made%20with&message=Node.js%20and%20Express&style=flat&logo=node.js" width="250" />
+    <img src="https://img.shields.io/static/v1?label=Made%20with&message=Redis&style=flat&logo=redis" width="150" />
+    <img src="https://img.shields.io/static/v1?label=Made%20with&message=React&style=flat&logo=react" width="150" /> 
+</p>
+
+![Home Page](homepage.png)
 
 ### Project Directory Structure
 
@@ -15,10 +23,10 @@ A more creative & efficient way to find restaurants when eating in groups.
 ├── client
 │   ├── package.json            # Metadata/dependencies for frontend React app
 │   ├── public
-│   │   ├── favicon.ico         # Favicon for single page React app
+│   │   ├── favicon.ico
 │   │   ├── index.html          # HTML for single page React app
-│   │   ├── logo192.png         # Logo for single page React app
-│   │   ├── logo512.png         # Logo for single page React app
+│   │   ├── logo192.png
+│   │   ├── logo512.png
 │   │   ├── manifest.json       # Metadata for single page React app
 │   │   └── robots.txt          # robots.txt for single page React app
 │   ├── README.md               # README for frontend client
@@ -61,53 +69,74 @@ A more creative & efficient way to find restaurants when eating in groups.
 └── yelp.js                     # API Key for the Yelp Fusion Business Search API
 ```
 
-### Backend Quickstart (from repo root directory)
+## How to run Chicken Tinder locally
 
-- `npm install`
-- `npm start`
-- Open http://localhost:3001/
+Note: these steps assume you have Node.js and npm installed. You can install both by downloading and running the installer [here](https://nodejs.org/en/download/).
 
-### Frontend Quickstart (from repo root directory)
+#### Step 1: Clone this repository
 
-- Open 1st terminal to start Redis server
-  1. `$ redis-server`
-  2. If redis port already occupied, `$ redis-cli shutdown` and retry step 1
-- Open 2nd terminal to start Client
-  1. `$ cd client`
-  2. `$ npm install`
-  3. `$ npm start`
-  4. You should be automatically directed to http://localhost:8000
+1. Run `$ git clone https://github.com/sdulaney/UCLA-CS-130-Group4.git`
 
-### Instructions to install Redis (from repo root directory)
+#### Step 2: Install Redis locally
 
-- `$ npm install ioredis` //this command will install redis client for node.js
-- Now to install Redis server
-  - Mac: `$ brew install redis`
-  - Others (make sure you have GCC compiler and libc):
-    ```sh
-    $ wget http://download.redis.io/redis-stable.tar.gz
-    $ tar xvzf redis-stable.tar.gz
-    $ cd redis-stable
-    $ make
-    ```
-  - Test if Redis server is working
-    - In a new terminal, `$ redis-cli ping`
-    - You should see `PONG`
+1. Install Redis server
 
-Look at the app.js (backend) to see how to connect to redis server from node.js
+   - Mac:
+     Run `$ brew install redis`
+   - Others (make sure you have GCC compiler and libc):
 
-- For more info about setting up Redis: https://redis.io/topics/quickstart
-- For more info about npm ioredis: https://www.npmjs.com/package/ioredis
+   ```sh
+   $ wget http://download.redis.io/redis-stable.tar.gz
+   $ tar xvzf redis-stable.tar.gz
+   $ cd redis-stable
+   $ make
+   ```
 
-## Testing (from root directory)
+2. Test if Redis server is working
+   - In a new terminal, Run `$ redis-cli ping`
+   - You should see `PONG`
 
-- Frontend
+#### Step 3: Run Redis locally (Note: you will not be able to run Backend without starting Redis)
 
-  - `$ cd client`
-  - `$ npm install`
-  - `$ npm run test`
-  - Press `a` to run all tests
+1. Open 1st terminal window to start Redis server
 
-- Backend
-  - `$ npm install`
-  - `$ npm test`
+2. Run `$ redis-server`
+
+Note: If redis port already occupied, Run `$ redis-cli shutdown` and retry previous command
+
+Note: The database listens on port 6379 and it's contents can be viewed using the [TablePlus GUI for Redis](https://tableplus.com/)
+
+#### Step 4: Run the backend Express app web server
+
+1. Open 2nd terminal window in repo root directory
+
+2. Run `$ npm install`
+3. Run `$ npm start`
+
+Note: The backend listens on port 3001 and can be accessed via http://localhost:3001/
+
+#### Step 5: Run the frontend React app client
+
+1. Open 3rd terminal window in repo root directory
+2. Run `$ cd client`
+3. Run `$ npm install`
+4. Run `$ npm start`
+5. Navigate to http://localhost:8000 in your web browser
+
+## How to run the automated tests locally
+
+#### Frontend
+
+1. Run `$ cd client`
+2. Run `$ npm install`
+3. Run`$ npm run test`, then press `a` to run all tests
+
+#### Backend
+
+1. Run `$ npm install`
+2. Run `$ npm test`
+
+<div align="left">
+ <h3 align="left">Tip: the meme changes if you refresh the page</h1>
+ <img src="https://random-memer.herokuapp.com/" width="400" alt="Meme GIF">
+</div>
