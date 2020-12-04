@@ -30,7 +30,7 @@ router.post("/create", async (req, res, next) => {
     })
   );
   var data = {};
-  Promise.all(promises).then(async (values) => {
+  await Promise.all(promises).then(async (values) => {
     // Set fetchedRestaurants for new group in db
     await groups.setFetchedRestaurantLists(groupId, values);
   });
