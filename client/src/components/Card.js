@@ -19,7 +19,7 @@ import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "@material-ui/lab/Rating";
 
-import { faDirections, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
+import { faDirections } from "@fortawesome/free-solid-svg-icons";
 
 export default class CardDisplay extends React.Component {
   constructor(props) {
@@ -65,13 +65,6 @@ export default class CardDisplay extends React.Component {
               </h6>
             </Card.Text>
             <div className="buttonsContainer">
-              <div className="buttonChildContainer">
-                {this.props.isMatched ? (
-                  <button className="buttonStyle" onClick={this.props.phone}>
-                    <FontAwesomeIcon className="iconStyle" icon={faPhoneAlt} />
-                  </button>
-                ) : null}
-              </div>
               <div className="buttonChildContainer">
                 {this.props.isMatched ? (
                   <button
