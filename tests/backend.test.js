@@ -20,8 +20,13 @@ it('should create a group with groupid', async () => {
 	}
 	const response = await request.post('/groups/create').send(data)
 	groupid = response.text;
+	console.log(groupid)
 	expect(response.statusCode).toEqual(200);
+	const reslist = await groups.getFetchedRestaurantLists(groupid)
 	//TODO:check fetched restaurant
+	const response1 = await request.post(`/join/${groupid}/hank`);
+	const obj = JSON.parse(response1.text)
+	expect(reslist).toEqual(obj.restaurantList);
 });
 it('should add user to the group', async () => {
 	const username = 'frank';
