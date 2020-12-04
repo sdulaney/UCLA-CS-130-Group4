@@ -12,17 +12,21 @@ var userid2;
 var groupid;
 it('should create a group with groupid', async () => {
 	const data = {
-		"address": "641 Gayley Ave",
-		"city": "Los Angeles",
-		"state": "CA",
-		"zipCode": "90024",
-		"radius": "20"
+		address: "641 Gayley Ave",
+		city: "Los Angeles",
+		state: "CA",
+		zipCode: "90024",
+		radius: "20"
 	}
-	const response = await request.post('/groups/create').send(data)
+	const response = await request.post('/groups/create').send(data);
 	groupid = response.text;
+	console.log(groupid);
 	expect(response.statusCode).toEqual(200);
+	const restaurantList = await groups.getFetchedRestaurantLists(groupid);
+	console.log(restaurantList);
 	//TODO:check fetched restaurant
 });
+
 it('should add user to the group', async () => {
 	const username = 'frank';
 	const response = await request.post('/join/'+groupid+'/'+username);
@@ -31,6 +35,7 @@ it('should add user to the group', async () => {
 	userid1 = obj.userid;
 	expect(Object.keys(obj).length).toEqual(2);
 });
+
 it('should add another user to the group', async () => {
 	const username = 'hank';
 	const response = await request.post('/join/'+groupid+'/'+username);
