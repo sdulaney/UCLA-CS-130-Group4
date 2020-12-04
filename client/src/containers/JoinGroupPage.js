@@ -44,7 +44,7 @@ export default class JoinGroupPage extends React.Component {
     return (
       <div className="pageContainer">
         <div className="elementsContainer">
-          <h1 className="headers"> Join Event</h1>
+          <h1 className="headers"> Join Group</h1>
           <InputField
             fieldName={"Your Name"}
             fieldValue={this.state.userName}

@@ -49,7 +49,7 @@ export default class CreateGroup extends React.Component {
       <div>
         <div className="pageContainer">
           <div className="elementsContainer">
-            <h1 className="headers"> Create Event</h1>
+            <h1 className="headers"> Create Group</h1>
 
             <InputField
               fieldName={"Street Address"}
