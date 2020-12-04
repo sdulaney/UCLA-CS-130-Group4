@@ -1,6 +1,4 @@
 const {groups,users,restaurants} = require('../classes/classes.js');
-// var users = classes.Users();
-// var groups = classes.Groups();
 var express = require('express');
 var router = express.Router();
 const uuid = require('uuid');
@@ -12,35 +10,10 @@ router.post('/:uid/:username', async (req,res) =>{
 	const groupid = req.params.uid;
 	const username = req.params.username;
 	const userid = uuid.v4();
-	// console.log("in post "+userid);
 	await groups.insertNewMember(groupid, userid);
 	await users.insertNewUser(groupid,userid,username);
 	var list = await groups.getFetchedRestaurantLists(groupid);
 	res.status(200).json({"restaurantList":list, "userid":userid});
-
-//---------------------------old version--------------------------------
-	// // client.hmset(uid, "username", username);
-	// client.hget(uid, "usernames", function(err,reply){
-	// 	if(err){
-	// 		res.status(404).send(err);
-	// 	}else{
-	// 		var obj = JSON.parse(reply); // username JSON array
-	// 		console.log(obj);
-	// 		obj.push(userid);
-	// 		client.hset(uid, "usernames", JSON.stringify(obj));
-	// 		client.hset(userid, "name", username, "likedRestaurants", '[]');
-	// 		// res.status(200).send(reply);
-	// 	}
-	// });
-	// console.log("after post "+userid);
-	// client.hget(uid, "fetchedRestaurants", function(err,reply){
-	// 	if(err){
-	// 		res.status(404).send(err);
-	// 	}else{
-	// 		res.status(200).send(JSON.parse(reply));
-	// 	}
-	// });
-	// res.status(200).end();
 })
 
 module.exports = router;
