@@ -2,8 +2,6 @@ const {groups,users,restaurants} = require('../classes/classes.js');
 var express = require('express');
 var router = express.Router();
 const uuid = require('uuid');
-const redis = require('redis');
-const client = redis.createClient();
 
 /* POST user to a group*/
 router.post('/:uid/:username', async (req,res) =>{
