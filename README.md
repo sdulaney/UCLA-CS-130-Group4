@@ -21,7 +21,7 @@ A more creative & efficient way to find restaurants when eating in groups.
 │   ├── classes.js              # Implementation of Users, Groups, and Restaurants classes
 │   └── matcher.js              # Matching algorithm
 ├── client
-│   ├── package.json            # Metadata/dependencies for frontend React app
+|   ├── package.json            # Metadata/dependencies for frontend React app
 │   ├── public
 │   │   ├── favicon.ico
 │   │   ├── index.html          # HTML for single page React app
@@ -55,6 +55,9 @@ A more creative & efficient way to find restaurants when eating in groups.
 │   │       └── SwipingPage.test.js         # Tests for SwipingPage (jest-dom)
 │   └── yarn.lock
 ├── dump.rdb
+├── out
+|   ├── index.html              # Display the APIs documentation used in Backend. Open the file with browser
+│   └── package.json            # Metadata/dependencies for frontend React app
 ├── package.json                            # Metadata/dependencies for backend Express app
 ├── README.md                               # README for root project directory
 ├── routes
