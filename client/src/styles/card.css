@@ -118,3 +118,15 @@
   font-weight: bold;
   transition: 0.4s;
 }
+
+.buttonStyle {
+  color: red;
+  /*width: 100px;
+  height: 100px;*/
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  position: right;
+  margin-top: -60px;
+  max-height: 300px;
+  max-width: 100%;
+}
