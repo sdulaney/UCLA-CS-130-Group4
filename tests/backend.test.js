@@ -8,6 +8,7 @@ var groups = classes.groups
 var restaurants = classes.restaurants
 
 // -----------simulate the process with a group of hank, frank and stewart-------------
+// All three of them like saffron-and-rose-ice-cream
 
 var userid1;
 var userid2;
