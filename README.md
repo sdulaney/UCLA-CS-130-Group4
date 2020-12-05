@@ -136,6 +136,11 @@ Note: The backend listens on port 3001 and can be accessed via http://localhost:
 1. Run `$ npm install`
 2. Run `$ npm test`
 
+## How to automatically generate documents of APIs
+
+1. Run `$ npm install jsdoc`
+2. Run `$ jsdoc ./classes/classes.js `
+
 <div align="left">
  <h3 align="left">Tip: the meme changes if you refresh the page</h1>
  <img src="https://random-memer.herokuapp.com/" width="400" alt="Meme GIF">
