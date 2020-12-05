@@ -59,13 +59,18 @@
 /* --------------------------------------- */
 .buttonStyle {
   color: red;
-  width: 100px;
-  height: 100px;
+  /* width: 100px; */
+  /* height: 100px; */
   -moz-border-radius: 100px;
   -webkit-border-radius: 100px;
   position: center;
   margin-left: 190px;
   margin-top: -60px;
+  max-height: 300px;
+  max-width: 100%;
+  font-size: 45px;
+  font-weight: bold;
+  transition: 0.4s;
 }
 .iconStyle {
   color: rgb(82, 80, 80);
